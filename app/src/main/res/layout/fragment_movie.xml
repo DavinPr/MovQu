@@ -81,9 +81,9 @@
 
             <include
                 android:id="@+id/discover_layout"
-                layout="@layout/list_item_layout"
+                layout="@layout/discover_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="match_parent" />
 
             <include
                 android:id="@+id/now_playing_layout"

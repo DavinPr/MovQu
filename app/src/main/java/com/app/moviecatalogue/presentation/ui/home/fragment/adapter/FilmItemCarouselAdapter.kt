@@ -4,11 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.app.moviecatalogue.core.domain.usecase.model.Movie
-import com.app.moviecatalogue.databinding.FilmCarouselBinding
+import com.app.moviecatalogue.databinding.FilmItemCarouselBinding
 import com.app.moviecatalogue.presentation.utils.toImageurl
 import com.bumptech.glide.Glide
 
-class ListFilmCarouselAdapter : RecyclerView.Adapter<ListFilmCarouselAdapter.ListViewHolder>() {
+class FilmItemCarouselAdapter : RecyclerView.Adapter<FilmItemCarouselAdapter.ItemViewHolder>() {
 
     private val list = ArrayList<Movie>()
 
@@ -18,33 +18,33 @@ class ListFilmCarouselAdapter : RecyclerView.Adapter<ListFilmCarouselAdapter.Lis
         notifyDataSetChanged()
     }
 
+    fun getData() = list
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): ListFilmCarouselAdapter.ListViewHolder =
-        ListViewHolder(
-            FilmCarouselBinding.inflate(
+    ): FilmItemCarouselAdapter.ItemViewHolder =
+        ItemViewHolder(
+            FilmItemCarouselBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
             )
         )
 
-    override fun onBindViewHolder(holder: ListFilmCarouselAdapter.ListViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: FilmItemCarouselAdapter.ItemViewHolder, position: Int) {
         val data = list[position]
         holder.bind(data)
     }
 
     override fun getItemCount(): Int = list.size
 
-    inner class ListViewHolder(private val binding: FilmCarouselBinding) :
+    inner class ItemViewHolder(private val binding: FilmItemCarouselBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(movie: Movie) {
             Glide.with(itemView.context)
                 .load(movie.backdropPath?.toImageurl())
                 .into(binding.backdrop)
-
-            binding.title.text = movie.title
         }
     }
 }

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="8dp"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/poster"
+        android:layout_width="150dp"
+        android:layout_height="200dp"
+        android:scaleType="centerCrop"
+        android:background="@color/white"
+        android:foreground="@drawable/image_foreground"
+        app:riv_corner_radius="10dp"
+        tools:src="@tools:sample/backgrounds/scenic"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="UnusedAttribute" />
+
+    <TextView
+        android:id="@+id/title"
+        style="@style/Theme.MovieCatalogue.Text.Medium16"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:maxLines="2"
+        android:lines="2"
+        android:gravity="center_vertical"
+        android:ellipsize="end"
+        app:layout_constraintEnd_toEndOf="@+id/poster"
+        app:layout_constraintStart_toStartOf="@+id/poster"
+        app:layout_constraintTop_toBottomOf="@+id/poster"
+        tools:text="Avengers: Infinity Wars" />
+
+    <TextView
+        android:id="@+id/rating_value"
+        style="@style/Theme.MovieCatalogue.Text.Medium16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/secondaryColor"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="@+id/title"
+        app:layout_constraintTop_toBottomOf="@+id/title"
+        tools:text="7.6" />
+
+    <androidx.appcompat.widget.AppCompatRatingBar
+        android:id="@+id/ratingbar"
+        style="@style/Widget.AppCompat.RatingBar.Small"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        app:layout_constraintBottom_toBottomOf="@+id/rating_value"
+        app:layout_constraintStart_toEndOf="@+id/rating_value"
+        app:layout_constraintTop_toTopOf="@+id/rating_value" />
+
+    <TextView
+        android:id="@+id/date"
+        style="@style/Theme.MovieCatalogue.Text.Regular14"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:textColor="@color/dark_gray"
+        app:layout_constraintEnd_toEndOf="@+id/title"
+        app:layout_constraintStart_toStartOf="@+id/title"
+        app:layout_constraintTop_toBottomOf="@+id/ratingbar"
+        tools:text="8 Maret 2021" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

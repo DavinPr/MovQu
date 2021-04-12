@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tv_title_category"
+        style="@style/Theme.MovieCatalogue.Text.Medium18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="@string/discover"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/view_all"
+        style="@style/Theme.MovieCatalogue.Text.Regular14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="16dp"
+        android:text="@string/view_all"
+        android:textColor="@color/primaryColor"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_title_category"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_title_category" />
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewpager_film"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:nestedScrollingEnabled="false"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        app:layout_constraintDimensionRatio="1.5:1"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/indicator"
+        app:layout_constraintEnd_toStartOf="@+id/btn_next"
+        app:layout_constraintStart_toEndOf="@+id/btn_prev"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title_category" />
+
+    <ImageButton
+        android:id="@+id/btn_prev"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:background="@drawable/btn_back"
+        android:backgroundTint="@color/white"
+        android:backgroundTintMode="multiply"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@id/viewpager_film"
+        app:layout_constraintStart_toStartOf="@+id/tv_title_category"
+        app:layout_constraintTop_toTopOf="@id/viewpager_film"
+        tools:ignore="ContentDescription" />
+
+    <ImageButton
+        android:id="@+id/btn_next"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_centerVertical="true"
+        android:background="@drawable/btn_back"
+        android:backgroundTint="@color/white"
+        android:backgroundTintMode="multiply"
+        android:visibility="visible"
+        android:rotation="180"
+        app:layout_constraintTop_toTopOf="@id/viewpager_film"
+        app:layout_constraintBottom_toBottomOf="@+id/viewpager_film"
+        app:layout_constraintEnd_toEndOf="@+id/view_all"
+        tools:ignore="ContentDescription" />
+
+    <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+        android:id="@+id/indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:visibility="visible"
+        app:dotsColor="@color/primaryColor"
+        app:dotsCornerRadius="8dp"
+        app:dotsSize="8dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/discover_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:progressMode="true"
+        app:selectedDotColor="@color/secondaryColor" />
+
+    <TextView
+        android:id="@+id/discover_title"
+        style="@style/Theme.MovieCatalogue.Text.Medium18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/discover_rating"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="Avengers: Endgame" />
+
+    <RatingBar
+        android:id="@+id/discover_rating"
+        style="@style/Widget.AppCompat.RatingBar.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/discover_title"
+        app:layout_constraintStart_toStartOf="@id/discover_title" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

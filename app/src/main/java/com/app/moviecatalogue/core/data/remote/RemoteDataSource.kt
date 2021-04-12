@@ -20,7 +20,7 @@ class RemoteDataSource(private val apiService: ApiService) {
             if (dataArray.isNullOrEmpty()) {
                 emit(ApiResponse.Empty)
             } else {
-                emit(ApiResponse.Success(dataArray))
+                emit(ApiResponse.Success(dataArray.subList(0, 5)))
             }
         }.catch { e ->
             emit(ApiResponse.Error(e.toString()))
@@ -34,7 +34,7 @@ class RemoteDataSource(private val apiService: ApiService) {
             if (dataArray.isNullOrEmpty()) {
                 emit(ApiResponse.Empty)
             } else {
-                emit(ApiResponse.Success(dataArray))
+                emit(ApiResponse.Success(dataArray.subList(0, 10)))
             }
         }.catch { e ->
             emit(ApiResponse.Error(e.toString()))
@@ -48,7 +48,7 @@ class RemoteDataSource(private val apiService: ApiService) {
             if (dataArray.isNullOrEmpty()) {
                 emit(ApiResponse.Empty)
             } else {
-                emit(ApiResponse.Success(dataArray))
+                emit(ApiResponse.Success(dataArray.subList(0, 10)))
             }
         }.catch { e ->
             emit(ApiResponse.Error(e.toString()))
@@ -62,7 +62,7 @@ class RemoteDataSource(private val apiService: ApiService) {
             if (dataArray.isNullOrEmpty()) {
                 emit(ApiResponse.Empty)
             } else {
-                emit(ApiResponse.Success(dataArray))
+                emit(ApiResponse.Success(dataArray.subList(0, 5)))
             }
         }.catch { e ->
             emit(ApiResponse.Error(e.toString()))
@@ -76,7 +76,7 @@ class RemoteDataSource(private val apiService: ApiService) {
             if (dataArray.isNullOrEmpty()) {
                 emit(ApiResponse.Empty)
             } else {
-                emit(ApiResponse.Success(dataArray))
+                emit(ApiResponse.Success(dataArray.subList(0, 10)))
             }
         }.catch { e ->
             emit(ApiResponse.Error(e.toString()))
@@ -90,7 +90,7 @@ class RemoteDataSource(private val apiService: ApiService) {
             if (dataArray.isNullOrEmpty()) {
                 emit(ApiResponse.Empty)
             } else {
-                emit(ApiResponse.Success(dataArray))
+                emit(ApiResponse.Success(dataArray.subList(0, 10)))
             }
         }.catch { e ->
             emit(ApiResponse.Error(e.toString()))

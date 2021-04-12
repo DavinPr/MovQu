@@ -6,9 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.CompositePageTransformer
+import androidx.viewpager2.widget.MarginPageTransformer
+import androidx.viewpager2.widget.ViewPager2
 import com.app.moviecatalogue.R
 import com.app.moviecatalogue.databinding.FragmentMovieBinding
-import com.app.moviecatalogue.presentation.ui.home.fragment.adapter.ListFilmCarouselAdapter
+import com.app.moviecatalogue.presentation.ui.home.fragment.adapter.FilmItemCarouselAdapter
+import com.app.moviecatalogue.presentation.ui.home.fragment.adapter.FilmItemHorizontalAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MovieFragment : Fragment() {
@@ -30,22 +35,47 @@ class MovieFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val discoverAdapter = ListFilmCarouselAdapter()
+        val discoverAdapter = FilmItemCarouselAdapter()
         viewModel.getDiscover.observe(viewLifecycleOwner) { movies ->
             val data = movies.data
             if (data != null) {
+                binding.discoverLayout.apply {
+                    btnNext.visibility = View.VISIBLE
+                    btnPrev.visibility = View.VISIBLE
+                    indicator.visibility = View.VISIBLE
+                }
                 discoverAdapter.setData(movies.data)
+                binding.discoverLayout.discoverTitle.text = data[0].title
             }
         }
 
-        binding.discoverLayout.rvFilm.apply {
-            layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            hasFixedSize()
+        binding.discoverLayout.viewpagerFilm.apply {
             adapter = discoverAdapter
+            clipToPadding = false
+            clipChildren = false
+            getChildAt(0).overScrollMode = RecyclerView.OVER_SCROLL_NEVER
+
+            val compositePageTransformer = CompositePageTransformer()
+            compositePageTransformer.addTransformer(MarginPageTransformer(40))
+            setPageTransformer(compositePageTransformer)
+            binding.discoverLayout.indicator.setViewPager2(this)
+
+            registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    super.onPageSelected(position)
+                    val data = discoverAdapter.getData()
+                    binding.discoverLayout.discoverTitle.text = if (data.size != 0) {
+                        data[position].title
+                    } else {
+                        "Not Found"
+                    }
+                }
+            })
+
+
         }
 
-        val nowPlayingAdapter = ListFilmCarouselAdapter()
+        val nowPlayingAdapter = FilmItemHorizontalAdapter()
         viewModel.getNowPlaying.observe(viewLifecycleOwner) { movies ->
             val data = movies.data
             if (data != null) {
@@ -57,15 +87,15 @@ class MovieFragment : Fragment() {
         binding.nowPlayingLayout.apply {
             tvTitleCategory.text = resources.getString(R.string.now_playing)
             rvFilm.also {
-                it.layoutManager =
-                    LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-                it.hasFixedSize()
                 it.adapter = nowPlayingAdapter
+                it.layoutManager =
+                    LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                it.hasFixedSize()
             }
         }
 
 
-        val upcomingAdapter = ListFilmCarouselAdapter()
+        val upcomingAdapter = FilmItemHorizontalAdapter()
         viewModel.getUpcoming.observe(viewLifecycleOwner) { movies ->
             val data = movies.data
             if (data != null) {
