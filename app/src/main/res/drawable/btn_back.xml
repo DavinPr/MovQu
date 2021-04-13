@@ -11,6 +11,5 @@
         </shape>
     </item>
 
-    <item
-        android:drawable="@drawable/ic_arrow_back" />
+    <item android:drawable="@drawable/ic_arrow_back" />
 </layer-list>

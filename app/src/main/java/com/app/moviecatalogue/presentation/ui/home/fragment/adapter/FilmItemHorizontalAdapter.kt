@@ -4,16 +4,18 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.app.moviecatalogue.core.domain.usecase.model.Movie
+import com.app.moviecatalogue.core.domain.usecase.model.TvShow
 import com.app.moviecatalogue.databinding.FilmItemHorizontalBinding
+import com.app.moviecatalogue.presentation.utils.dateFormat
 import com.app.moviecatalogue.presentation.utils.toImageurl
 import com.bumptech.glide.Glide
 
-class FilmItemHorizontalAdapter :
-    RecyclerView.Adapter<FilmItemHorizontalAdapter.ItemViewHolder>() {
+class FilmItemHorizontalAdapter<T> :
+    RecyclerView.Adapter<FilmItemHorizontalAdapter<T>.ItemViewHolder>() {
 
-    private val list = ArrayList<Movie>()
+    private val list = ArrayList<T>()
 
-    fun setData(list: List<Movie>) {
+    fun setData(list: List<T>) {
         this.list.clear()
         this.list.addAll(list)
         notifyDataSetChanged()
@@ -22,7 +24,7 @@ class FilmItemHorizontalAdapter :
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): FilmItemHorizontalAdapter.ItemViewHolder =
+    ): FilmItemHorizontalAdapter<T>.ItemViewHolder =
         ItemViewHolder(
             FilmItemHorizontalBinding.inflate(
                 LayoutInflater.from(parent.context),
@@ -31,7 +33,10 @@ class FilmItemHorizontalAdapter :
             )
         )
 
-    override fun onBindViewHolder(holder: FilmItemHorizontalAdapter.ItemViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: FilmItemHorizontalAdapter<T>.ItemViewHolder,
+        position: Int
+    ) {
         val data = list[position]
         holder.bind(data)
     }
@@ -40,14 +45,44 @@ class FilmItemHorizontalAdapter :
 
     inner class ItemViewHolder(private val binding: FilmItemHorizontalBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(movie: Movie) {
+        fun bind(film: T) {
+            val posterPath: String?
+            val title: String?
+            val date: String?
+            val rate: Double?
+
+            when (film) {
+                is Movie -> {
+                    posterPath = film.posterPath
+                    title = film.title
+                    date = film.releaseDate
+                    rate = film.voteAverage
+                }
+                is TvShow -> {
+                    posterPath = film.posterPath
+                    title = film.name
+                    date = film.firstAirDate
+                    rate = film.voteAverage
+                }
+                else -> {
+                    posterPath = "Nothing"
+                    title = "Nothing"
+                    date = "Nothing"
+                    rate = 0.0
+                }
+            }
+
             Glide.with(itemView.context)
-                .load(movie.posterPath?.toImageurl())
+                .load(posterPath?.toImageurl())
                 .into(binding.poster)
 
-            binding.title.text = movie.title.toString()
-            binding.date.text = movie.releaseDate.toString()
-            binding.ratingValue.text = movie.voteAverage.toString()
+            binding.title.text = title.toString()
+            binding.date.text = date.dateFormat(itemView.context)
+            binding.ratingValue.text = rate.toString()
+            binding.ratingbar.apply {
+                stepSize = 0.1f
+                rating = rate?.toFloat()?.div(2) ?: 0f
+            }
         }
     }
 }

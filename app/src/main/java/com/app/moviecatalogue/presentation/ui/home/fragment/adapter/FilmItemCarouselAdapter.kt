@@ -4,15 +4,17 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.app.moviecatalogue.core.domain.usecase.model.Movie
+import com.app.moviecatalogue.core.domain.usecase.model.TvShow
 import com.app.moviecatalogue.databinding.FilmItemCarouselBinding
 import com.app.moviecatalogue.presentation.utils.toImageurl
 import com.bumptech.glide.Glide
 
-class FilmItemCarouselAdapter : RecyclerView.Adapter<FilmItemCarouselAdapter.ItemViewHolder>() {
+class FilmItemCarouselAdapter<T> :
+    RecyclerView.Adapter<FilmItemCarouselAdapter<T>.ItemViewHolder>() {
 
-    private val list = ArrayList<Movie>()
+    private val list = ArrayList<T>()
 
-    fun setData(list: List<Movie>) {
+    fun setData(list: List<T>) {
         this.list.clear()
         this.list.addAll(list)
         notifyDataSetChanged()
@@ -23,7 +25,7 @@ class FilmItemCarouselAdapter : RecyclerView.Adapter<FilmItemCarouselAdapter.Ite
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): FilmItemCarouselAdapter.ItemViewHolder =
+    ): FilmItemCarouselAdapter<T>.ItemViewHolder =
         ItemViewHolder(
             FilmItemCarouselBinding.inflate(
                 LayoutInflater.from(parent.context),
@@ -32,7 +34,10 @@ class FilmItemCarouselAdapter : RecyclerView.Adapter<FilmItemCarouselAdapter.Ite
             )
         )
 
-    override fun onBindViewHolder(holder: FilmItemCarouselAdapter.ItemViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: FilmItemCarouselAdapter<T>.ItemViewHolder,
+        position: Int
+    ) {
         val data = list[position]
         holder.bind(data)
     }
@@ -41,9 +46,15 @@ class FilmItemCarouselAdapter : RecyclerView.Adapter<FilmItemCarouselAdapter.Ite
 
     inner class ItemViewHolder(private val binding: FilmItemCarouselBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(movie: Movie) {
+        fun bind(film: T) {
+            val imagePath = when (film) {
+                is Movie -> film.backdropPath
+                is TvShow -> film.backdropPath
+                else -> "Nothing"
+            }
+
             Glide.with(itemView.context)
-                .load(movie.backdropPath?.toImageurl())
+                .load(imagePath?.toImageurl())
                 .into(binding.backdrop)
         }
     }

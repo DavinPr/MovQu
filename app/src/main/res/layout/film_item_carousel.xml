@@ -13,9 +13,9 @@
         android:layout_height="match_parent"
         android:foreground="@drawable/image_foreground"
         android:scaleType="centerCrop"
-        app:riv_corner_radius="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:riv_corner_radius="10dp"
         tools:ignore="UnusedAttribute"
         tools:src="@tools:sample/backgrounds/scenic" />
 

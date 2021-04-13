@@ -32,15 +32,15 @@
         android:id="@+id/viewpager_film"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
         android:nestedScrollingEnabled="false"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
-        app:layout_constraintDimensionRatio="1.5:1"
-        android:layout_marginBottom="16dp"
-        android:layout_marginTop="16dp"
         app:layout_constraintBottom_toTopOf="@+id/indicator"
-        app:layout_constraintEnd_toStartOf="@+id/btn_next"
-        app:layout_constraintStart_toEndOf="@+id/btn_prev"
+        app:layout_constraintDimensionRatio="1.5:1"
+        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toBottomOf="@+id/tv_title_category" />
 
     <ImageButton
@@ -52,8 +52,9 @@
         android:background="@drawable/btn_back"
         android:backgroundTint="@color/white"
         android:backgroundTintMode="multiply"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/viewpager_film"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="@+id/tv_title_category"
         app:layout_constraintTop_toTopOf="@id/viewpager_film"
         tools:ignore="ContentDescription" />
@@ -66,11 +67,12 @@
         android:background="@drawable/btn_back"
         android:backgroundTint="@color/white"
         android:backgroundTintMode="multiply"
-        android:visibility="visible"
         android:rotation="180"
-        app:layout_constraintTop_toTopOf="@id/viewpager_film"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/viewpager_film"
         app:layout_constraintEnd_toEndOf="@+id/view_all"
+        app:layout_constraintStart_toStartOf="@+id/guideline3"
+        app:layout_constraintTop_toTopOf="@id/viewpager_film"
         tools:ignore="ContentDescription" />
 
     <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
@@ -79,15 +81,14 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:visibility="visible"
+        android:layout_marginBottom="16dp"
+        android:visibility="invisible"
         app:dotsColor="@color/primaryColor"
         app:dotsCornerRadius="8dp"
         app:dotsSize="8dp"
-        android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toTopOf="@+id/discover_title"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:progressMode="true"
+        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:selectedDotColor="@color/secondaryColor" />
 
     <TextView
@@ -96,8 +97,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@+id/discover_rating"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
         tools:text="Avengers: Endgame" />
 
     <RatingBar
@@ -109,5 +110,19 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/discover_title"
         app:layout_constraintStart_toStartOf="@id/discover_title" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.1" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.9" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,4 +12,7 @@
     <string name="view_all">View all</string>
     <string name="now_playing">Now Playing</string>
     <string name="upcoming">Upcoming</string>
+    <string name="no_data">Not found</string>
+    <string name="airing_today">Airing Today</string>
+    <string name="on_the_air">On The Air</string>
 </resources>

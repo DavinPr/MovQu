@@ -11,6 +11,7 @@ import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
 import com.app.moviecatalogue.R
+import com.app.moviecatalogue.core.domain.usecase.model.Movie
 import com.app.moviecatalogue.databinding.FragmentMovieBinding
 import com.app.moviecatalogue.presentation.ui.home.fragment.adapter.FilmItemCarouselAdapter
 import com.app.moviecatalogue.presentation.ui.home.fragment.adapter.FilmItemHorizontalAdapter
@@ -35,17 +36,24 @@ class MovieFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val discoverAdapter = FilmItemCarouselAdapter()
+        val discoverAdapter = FilmItemCarouselAdapter<Movie>()
         viewModel.getDiscover.observe(viewLifecycleOwner) { movies ->
             val data = movies.data
-            if (data != null) {
+            if (data != null && data.isNotEmpty()) {
                 binding.discoverLayout.apply {
-                    btnNext.visibility = View.VISIBLE
-                    btnPrev.visibility = View.VISIBLE
                     indicator.visibility = View.VISIBLE
+                    if (data.size > 1) {
+                        btnNext.visibility = View.VISIBLE
+                    }
                 }
                 discoverAdapter.setData(movies.data)
-                binding.discoverLayout.discoverTitle.text = data[0].title
+                binding.discoverLayout.apply {
+                    discoverTitle.text = data[0].title
+                    discoverRating.also {
+                        it.stepSize = 0.1f
+                        it.rating = data[0].voteAverage?.toFloat()?.div(2) ?: 0f
+                    }
+                }
             }
         }
 
@@ -64,10 +72,27 @@ class MovieFragment : Fragment() {
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
                     val data = discoverAdapter.getData()
-                    binding.discoverLayout.discoverTitle.text = if (data.size != 0) {
-                        data[position].title
+                    if (data.size != 0) {
+                        binding.discoverLayout.apply {
+                            when (position) {
+                                0 -> btnPrev.visibility = View.GONE
+                                data.size - 1 -> btnNext.visibility = View.GONE
+                                else -> {
+                                    btnNext.visibility = View.VISIBLE
+                                    btnPrev.visibility = View.VISIBLE
+                                }
+                            }
+                            data[position].also {
+                                discoverRating.apply {
+                                    stepSize = 0.1f
+                                    rating = it.voteAverage?.toFloat()?.div(2) ?: 0f
+                                }
+                                discoverTitle.text = it.title
+                            }
+                        }
                     } else {
-                        "Not Found"
+                        binding.discoverLayout.discoverTitle.text =
+                            this@MovieFragment.resources.getString(R.string.no_data)
                     }
                 }
             })
@@ -75,7 +100,7 @@ class MovieFragment : Fragment() {
 
         }
 
-        val nowPlayingAdapter = FilmItemHorizontalAdapter()
+        val nowPlayingAdapter = FilmItemHorizontalAdapter<Movie>()
         viewModel.getNowPlaying.observe(viewLifecycleOwner) { movies ->
             val data = movies.data
             if (data != null) {
@@ -95,7 +120,7 @@ class MovieFragment : Fragment() {
         }
 
 
-        val upcomingAdapter = FilmItemHorizontalAdapter()
+        val upcomingAdapter = FilmItemHorizontalAdapter<Movie>()
         viewModel.getUpcoming.observe(viewLifecycleOwner) { movies ->
             val data = movies.data
             if (data != null) {

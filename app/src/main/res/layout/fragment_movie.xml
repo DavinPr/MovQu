@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".presentation.ui.home.fragment.movie.MovieFragment">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -35,36 +34,6 @@
                 app:drawableStartCompat="@drawable/ic_search" />
 
         </FrameLayout>
-
-        <!--        <com.google.android.material.appbar.CollapsingToolbarLayout-->
-        <!--            android:id="@+id/collapsing_toolbar"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="match_parent"-->
-        <!--            app:layout_scrollFlags="scroll|enterAlways">-->
-
-        <!--            <FrameLayout-->
-        <!--                android:layout_width="match_parent"-->
-        <!--                android:layout_height="wrap_content"-->
-        <!--                android:background="#EEEEEE"-->
-        <!--                app:layout_collapseMode="parallax">-->
-
-        <!--                <TextView-->
-        <!--                    style="@style/Theme.MovieCatalogue.Text.Regular14"-->
-        <!--                    android:layout_width="match_parent"-->
-        <!--                    android:layout_height="match_parent"-->
-        <!--                    android:layout_marginStart="16dp"-->
-        <!--                    android:layout_marginTop="10dp"-->
-        <!--                    android:layout_marginEnd="16dp"-->
-        <!--                    android:layout_marginBottom="10dp"-->
-        <!--                    android:drawablePadding="8dp"-->
-        <!--                    android:gravity="center_vertical"-->
-        <!--                    android:text="@string/search_here"-->
-        <!--                    android:textColor="@android:color/black"-->
-        <!--                    app:drawableStartCompat="@drawable/ic_search" />-->
-
-        <!--            </FrameLayout>-->
-
-        <!--        </com.google.android.material.appbar.CollapsingToolbarLayout>-->
 
     </com.google.android.material.appbar.AppBarLayout>
 
