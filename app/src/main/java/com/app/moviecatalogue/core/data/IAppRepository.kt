@@ -16,4 +16,6 @@ interface IAppRepository {
     fun getListTvAiringToday(): Flow<Resource<List<TvShow>>>
 
     fun getListTvOnTheAir(): Flow<Resource<List<TvShow>>>
+
+
 }

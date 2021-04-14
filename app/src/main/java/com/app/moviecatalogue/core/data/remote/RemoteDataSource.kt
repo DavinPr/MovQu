@@ -2,7 +2,9 @@ package com.app.moviecatalogue.core.data.remote
 
 import com.app.moviecatalogue.core.data.remote.network.ApiResponse
 import com.app.moviecatalogue.core.data.remote.network.ApiService
+import com.app.moviecatalogue.core.data.remote.response.MovieDetailResponse
 import com.app.moviecatalogue.core.data.remote.response.MoviesItem
+import com.app.moviecatalogue.core.data.remote.response.TvDetailResponse
 import com.app.moviecatalogue.core.data.remote.response.TvShowItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -91,6 +93,30 @@ class RemoteDataSource(private val apiService: ApiService) {
                 emit(ApiResponse.Empty)
             } else {
                 emit(ApiResponse.Success(dataArray.subList(0, 10)))
+            }
+        }.catch { e ->
+            emit(ApiResponse.Error(e.toString()))
+        }.flowOn(Dispatchers.IO)
+
+    fun getDetailMovie(id: String): Flow<ApiResponse<MovieDetailResponse>> =
+        flow {
+            val data = apiService.getDetailMovie(id)
+            if (data.success) {
+                emit(ApiResponse.Success(data))
+            } else {
+                emit(ApiResponse.Empty)
+            }
+        }.catch { e ->
+            emit(ApiResponse.Error(e.toString()))
+        }.flowOn(Dispatchers.IO)
+
+    fun getDetailTv(id: String): Flow<ApiResponse<TvDetailResponse>> =
+        flow {
+            val data = apiService.getDetailTv(id)
+            if (data.success) {
+                emit(ApiResponse.Success(data))
+            } else {
+                emit(ApiResponse.Empty)
             }
         }.catch { e ->
             emit(ApiResponse.Error(e.toString()))

@@ -13,6 +13,7 @@ class FilmItemCarouselAdapter<T> :
     RecyclerView.Adapter<FilmItemCarouselAdapter<T>.ItemViewHolder>() {
 
     private val list = ArrayList<T>()
+    var onClick: ((T) -> Unit)? = null
 
     fun setData(list: List<T>) {
         this.list.clear()
@@ -46,6 +47,13 @@ class FilmItemCarouselAdapter<T> :
 
     inner class ItemViewHolder(private val binding: FilmItemCarouselBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
+        init {
+            itemView.setOnClickListener {
+                onClick?.invoke(list[adapterPosition])
+            }
+        }
+
         fun bind(film: T) {
             val imagePath = when (film) {
                 is Movie -> film.backdropPath

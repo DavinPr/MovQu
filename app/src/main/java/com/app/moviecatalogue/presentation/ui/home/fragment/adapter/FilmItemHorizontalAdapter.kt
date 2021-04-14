@@ -14,6 +14,7 @@ class FilmItemHorizontalAdapter<T> :
     RecyclerView.Adapter<FilmItemHorizontalAdapter<T>.ItemViewHolder>() {
 
     private val list = ArrayList<T>()
+    var onClick: ((T) -> Unit)? = null
 
     fun setData(list: List<T>) {
         this.list.clear()
@@ -45,6 +46,13 @@ class FilmItemHorizontalAdapter<T> :
 
     inner class ItemViewHolder(private val binding: FilmItemHorizontalBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
+        init {
+            itemView.setOnClickListener {
+                onClick?.invoke(list[adapterPosition])
+            }
+        }
+
         fun bind(film: T) {
             val posterPath: String?
             val title: String?

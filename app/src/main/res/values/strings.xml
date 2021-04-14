@@ -15,4 +15,6 @@
     <string name="no_data">Not found</string>
     <string name="airing_today">Airing Today</string>
     <string name="on_the_air">On The Air</string>
+    <string name="release_date">Release Date</string>
+    <string name="runtime">Runtime</string>
 </resources>

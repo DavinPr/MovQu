@@ -1,5 +1,6 @@
 package com.app.moviecatalogue.presentation.ui.home.fragment.tvshow
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.app.moviecatalogue.R
 import com.app.moviecatalogue.core.domain.usecase.model.TvShow
 import com.app.moviecatalogue.databinding.FragmentTvShowBinding
+import com.app.moviecatalogue.presentation.ui.detail.DetailActivity
 import com.app.moviecatalogue.presentation.ui.home.fragment.adapter.FilmItemCarouselAdapter
 import com.app.moviecatalogue.presentation.ui.home.fragment.adapter.FilmItemHorizontalAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -73,8 +75,14 @@ class TvShowFragment : Fragment() {
                     if (data.size != 0) {
                         binding.discoverLayout.apply {
                             when (position) {
-                                0 -> btnPrev.visibility = View.GONE
-                                data.size - 1 -> btnNext.visibility = View.GONE
+                                0 -> {
+                                    btnNext.visibility = View.VISIBLE
+                                    btnPrev.visibility = View.GONE
+                                }
+                                data.size - 1 -> {
+                                    btnNext.visibility = View.GONE
+                                    btnPrev.visibility = View.VISIBLE
+                                }
                                 else -> {
                                     btnNext.visibility = View.VISIBLE
                                     btnPrev.visibility = View.VISIBLE
@@ -94,8 +102,12 @@ class TvShowFragment : Fragment() {
                     }
                 }
             })
+        }
 
-
+        discoverAdapter.onClick = {
+            val intent = Intent(activity, DetailActivity::class.java)
+            intent.putExtra(DetailActivity.ID_KEY, it.id.toString())
+            startActivity(intent)
         }
 
         val airingTodayAdapter = FilmItemHorizontalAdapter<TvShow>()
@@ -117,6 +129,12 @@ class TvShowFragment : Fragment() {
             }
         }
 
+        airingTodayAdapter.onClick = {
+            val intent = Intent(activity, DetailActivity::class.java)
+            intent.putExtra(DetailActivity.ID_KEY, it.id.toString())
+            startActivity(intent)
+        }
+
 
         val onTheAirAdapter = FilmItemHorizontalAdapter<TvShow>()
         viewModel.getTvOnTheAir.observe(viewLifecycleOwner) { tv ->
@@ -134,6 +152,12 @@ class TvShowFragment : Fragment() {
                 it.hasFixedSize()
                 it.adapter = onTheAirAdapter
             }
+        }
+
+        onTheAirAdapter.onClick = {
+            val intent = Intent(activity, DetailActivity::class.java)
+            intent.putExtra(DetailActivity.ID_KEY, it.id.toString())
+            startActivity(intent)
         }
     }
 
