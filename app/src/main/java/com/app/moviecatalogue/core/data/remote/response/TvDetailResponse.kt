@@ -14,7 +14,7 @@ data class TvDetailResponse(
 	val backdropPath: String? = null,
 
 	@field:SerializedName("genres")
-	val genres: List<GenresItem?>? = null,
+	val genres: List<GenresItem>? = null,
 
 	@field:SerializedName("popularity")
 	val popularity: Double? = null,
@@ -32,7 +32,7 @@ data class TvDetailResponse(
 	val overview: String? = null,
 
 	@field:SerializedName("seasons")
-	val seasons: List<SeasonsItem?>? = null,
+	val seasons: List<SeasonsItem>? = null,
 
 	@field:SerializedName("poster_path")
 	val posterPath: String? = null,
@@ -47,7 +47,7 @@ data class TvDetailResponse(
 	val tagline: String? = null,
 
 	@field:SerializedName("episode_run_time")
-	val episodeRunTime: List<Int?>? = null,
+	val episodeRunTime: List<Int>? = null,
 
 	@field:SerializedName("last_air_date")
 	val lastAirDate: String? = null

@@ -1,20 +1,20 @@
 package com.app.moviecatalogue.core.domain.usecase.model
 
 data class MovieDetail(
-    val backdrop_path: String,
-    val genres: List<MovieGenre>,
-    val id: Int,
-    val overview: String,
-    val popularity: Double,
-    val poster_path: String,
-    val release_date: String,
-    val runtime: Int,
-    val title: String,
-    val vote_average: Double,
-    val tagline: String
+    val backdrop_path: String? = null,
+    val genres: List<MovieGenre>? = null,
+    val id: Int? = null,
+    val overview: String? = null,
+    val popularity: Double? = null,
+    val poster_path: String? = null,
+    val release_date: String? = null,
+    val runtime: Int? = null,
+    val title: String? = null,
+    val vote_average: Double? = null,
+    val tagline: String? = null
 )
 
 data class MovieGenre(
-    val id: Int,
-    val name: String
+    val id: Int? = null,
+    val name: String? = null
 )

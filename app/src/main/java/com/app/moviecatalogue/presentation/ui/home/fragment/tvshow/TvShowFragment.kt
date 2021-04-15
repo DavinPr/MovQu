@@ -107,6 +107,7 @@ class TvShowFragment : Fragment() {
         discoverAdapter.onClick = {
             val intent = Intent(activity, DetailActivity::class.java)
             intent.putExtra(DetailActivity.ID_KEY, it.id.toString())
+            intent.putExtra(DetailActivity.TYPE_KEY, 102)
             startActivity(intent)
         }
 
@@ -132,6 +133,7 @@ class TvShowFragment : Fragment() {
         airingTodayAdapter.onClick = {
             val intent = Intent(activity, DetailActivity::class.java)
             intent.putExtra(DetailActivity.ID_KEY, it.id.toString())
+            intent.putExtra(DetailActivity.TYPE_KEY, 102)
             startActivity(intent)
         }
 
@@ -157,6 +159,7 @@ class TvShowFragment : Fragment() {
         onTheAirAdapter.onClick = {
             val intent = Intent(activity, DetailActivity::class.java)
             intent.putExtra(DetailActivity.ID_KEY, it.id.toString())
+            intent.putExtra(DetailActivity.TYPE_KEY, 102)
             startActivity(intent)
         }
     }

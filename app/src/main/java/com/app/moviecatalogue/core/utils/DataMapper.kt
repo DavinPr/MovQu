@@ -1,10 +1,11 @@
 package com.app.moviecatalogue.core.utils
 
 import com.app.moviecatalogue.core.data.local.entity.*
+import com.app.moviecatalogue.core.data.remote.response.MovieDetailResponse
 import com.app.moviecatalogue.core.data.remote.response.MoviesItem
+import com.app.moviecatalogue.core.data.remote.response.TvDetailResponse
 import com.app.moviecatalogue.core.data.remote.response.TvShowItem
-import com.app.moviecatalogue.core.domain.usecase.model.Movie
-import com.app.moviecatalogue.core.domain.usecase.model.TvShow
+import com.app.moviecatalogue.core.domain.usecase.model.*
 
 fun List<MoviesItem>.toDiscoverMovieEntity(): List<DiscoverMovieEntity> {
     if (this.isNullOrEmpty()) return emptyList()
@@ -55,6 +56,74 @@ fun List<MoviesItem>.toUpcomingMovieEntity(): List<UpcomingMovieEntity> {
         listMovie.add(movie)
     }
     return listMovie
+}
+
+fun MovieDetailResponse.toMovieDetailDomain(): MovieDetail {
+    val genres = ArrayList<MovieGenre>()
+    this.genres.map {
+        val genre = MovieGenre(
+            id = it.id,
+            name = it.name
+        )
+        genres.add(genre)
+    }
+
+    return MovieDetail(
+        backdrop_path = this.backdrop_path,
+        genres = genres,
+        id = this.id,
+        overview = this.overview,
+        popularity = this.popularity,
+        poster_path = this.poster_path,
+        release_date = this.release_date,
+        runtime = this.runtime,
+        title = this.title,
+        vote_average = this.vote_average,
+        tagline = this.tagline
+    )
+}
+
+fun TvDetailResponse.toTvDetailDomain(): TvDetail {
+    val genres = ArrayList<TvGenre>()
+    this.genres?.map {
+        val genre = TvGenre(
+            id = it.id,
+            name = it.name
+        )
+        genres.add(genre)
+    }
+
+    val seasons = ArrayList<TvSeasons>()
+    this.seasons?.map {
+        val season = TvSeasons(
+            airDate = it.airDate,
+            overview = it.overview,
+            episodeCount = it.episodeCount,
+            name = it.name,
+            seasonNumber = it.seasonNumber,
+            id = it.id,
+            posterPath = it.posterPath
+        )
+        seasons.add(season)
+    }
+
+    return TvDetail(
+        numberOfEpisodes = this.numberOfEpisodes,
+        backdropPath = this.backdropPath,
+        genres = genres,
+        popularity = this.popularity,
+        id = this.id,
+        numberOfSeasons = this.numberOfSeasons,
+        firstAirDate = this.firstAirDate,
+        overview = this.overview,
+        seasons = seasons,
+        posterPath = this.posterPath,
+        voteAverage = this.voteAverage,
+        name = this.name,
+        tagline = this.tagline,
+        episodeRunTime = this.episodeRunTime,
+        lastAirDate = this.lastAirDate
+    )
 }
 
 fun <T> List<T>.toMovieDomain(): List<Movie> {

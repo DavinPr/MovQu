@@ -3,6 +3,8 @@ package com.app.moviecatalogue.core.domain.usecase
 import com.app.moviecatalogue.core.data.AppRepository
 import com.app.moviecatalogue.core.data.Resource
 import com.app.moviecatalogue.core.domain.usecase.model.Movie
+import com.app.moviecatalogue.core.domain.usecase.model.MovieDetail
+import com.app.moviecatalogue.core.domain.usecase.model.TvDetail
 import com.app.moviecatalogue.core.domain.usecase.model.TvShow
 import kotlinx.coroutines.flow.Flow
 
@@ -24,4 +26,9 @@ class AppInteractor(private val appRepository: AppRepository) : AppUseCase {
 
     override fun getListTvOnTheAir(): Flow<Resource<List<TvShow>>> =
         appRepository.getListTvOnTheAir()
+
+    override fun getDetailMovie(id: String): Flow<Resource<MovieDetail>> =
+        appRepository.getDetailMovie(id)
+
+    override fun getDetailTv(id: String): Flow<Resource<TvDetail>> = appRepository.getDetailTv(id)
 }

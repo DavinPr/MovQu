@@ -10,7 +10,7 @@ data class MovieDetailResponse(
     @field:SerializedName("genres")
     val genres: List<DetailMovieGenre>,
     @field:SerializedName("id")
-    val id: Int,
+    val id: Int? = null,
     @field:SerializedName("overview")
     val overview: String,
     @field:SerializedName("popularity")

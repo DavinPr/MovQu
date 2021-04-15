@@ -9,7 +9,8 @@
         android:id="@+id/poster"
         android:layout_width="100dp"
         android:layout_height="125dp"
-        android:layout_margin="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:elevation="9dp"
         android:scaleType="centerCrop"
         android:src="@color/light_gray"
@@ -25,6 +26,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="16dp"
+        android:minLines="2"
+        android:gravity="center_vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/poster"
         app:layout_constraintTop_toTopOf="@+id/poster"
@@ -75,7 +78,7 @@
         tools:text="2 hours 30 minutes" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/rating"
         style="@style/Theme.MovieCatalogue.Text.Medium14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -95,7 +98,7 @@
         app:layout_constraintGuide_begin="240dp" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/rv_genre"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -103,15 +106,47 @@
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintEnd_toEndOf="@+id/runtime"
         app:layout_constraintStart_toStartOf="@+id/poster"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/rating"
         tools:listitem="@layout/detail_category_item" />
 
+    <TextView
+        android:id="@+id/tagline"
+        style="@style/Theme.MovieCatalogue.Text.Regular14"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        tools:text="Satte, Satte, Satte"
+        app:layout_constraintEnd_toEndOf="@+id/rv_genre"
+        app:layout_constraintStart_toStartOf="@+id/rv_genre"
+        app:layout_constraintTop_toBottomOf="@+id/rv_genre" />
+
     <View
+        android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="4dp"
-        android:layout_marginTop="16dp"
         android:background="@color/light_gray"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/tagline" />
 
+    <TextView
+        android:id="@+id/label_overview"
+        style="@style/Theme.MovieCatalogue.Text.Medium14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/overview"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="@+id/rv_genre"
+        app:layout_constraintTop_toBottomOf="@+id/view" />
+
+    <TextView
+        android:id="@+id/overview"
+        style="@style/Theme.MovieCatalogue.Text.Regular14"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        tools:text="This is an overview for the movie"
+        app:layout_constraintEnd_toEndOf="@+id/rv_genre"
+        app:layout_constraintStart_toStartOf="@+id/rv_genre"
+        app:layout_constraintTop_toBottomOf="@+id/label_overview" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

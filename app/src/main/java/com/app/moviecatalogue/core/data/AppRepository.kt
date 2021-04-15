@@ -3,12 +3,18 @@ package com.app.moviecatalogue.core.data
 import androidx.room.withTransaction
 import com.app.moviecatalogue.core.data.local.LocalDataSource
 import com.app.moviecatalogue.core.data.remote.RemoteDataSource
+import com.app.moviecatalogue.core.data.remote.network.ApiResponse
 import com.app.moviecatalogue.core.domain.usecase.model.Movie
+import com.app.moviecatalogue.core.domain.usecase.model.MovieDetail
+import com.app.moviecatalogue.core.domain.usecase.model.TvDetail
 import com.app.moviecatalogue.core.domain.usecase.model.TvShow
 import com.app.moviecatalogue.core.utils.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
+import timber.log.Timber
 
 class AppRepository(
     private val remoteDataSource: RemoteDataSource,
@@ -140,5 +146,31 @@ class AppRepository(
                 }
             }
         )
+
+    override fun getDetailMovie(id: String): Flow<Resource<MovieDetail>> =
+        flow {
+            emit(Resource.Loading())
+            when (val apiResponse = remoteDataSource.getDetailMovie(id).first()) {
+                is ApiResponse.Success -> {
+                    val data = apiResponse.data.toMovieDetailDomain()
+                    emit(Resource.Success(data))
+                }
+                is ApiResponse.Empty -> emit(Resource.Success(MovieDetail()))
+                is ApiResponse.Error -> emit(Resource.Error<MovieDetail>(apiResponse.errorMessage))
+            }
+        }
+
+    override fun getDetailTv(id: String): Flow<Resource<TvDetail>> =
+        flow {
+            emit(Resource.Loading())
+            when (val apiResponse = remoteDataSource.getDetailTv(id).first()) {
+                is ApiResponse.Success -> {
+                    val data = apiResponse.data.toTvDetailDomain()
+                    emit(Resource.Success(data))
+                }
+                is ApiResponse.Empty -> emit(Resource.Success(TvDetail()))
+                is ApiResponse.Error -> emit(Resource.Error<TvDetail>(apiResponse.errorMessage))
+            }
+        }
 
 }

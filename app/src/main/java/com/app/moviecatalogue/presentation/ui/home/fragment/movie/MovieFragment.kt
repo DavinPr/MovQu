@@ -109,6 +109,7 @@ class MovieFragment : Fragment() {
         discoverAdapter.onClick = {
             val intent = Intent(activity, DetailActivity::class.java)
             intent.putExtra(DetailActivity.ID_KEY, it.id.toString())
+            intent.putExtra(DetailActivity.TYPE_KEY, 101)
             startActivity(intent)
         }
 
@@ -134,6 +135,7 @@ class MovieFragment : Fragment() {
         nowPlayingAdapter.onClick = {
             val intent = Intent(activity, DetailActivity::class.java)
             intent.putExtra(DetailActivity.ID_KEY, it.id.toString())
+            intent.putExtra(DetailActivity.TYPE_KEY, 101)
             startActivity(intent)
         }
 
@@ -159,6 +161,7 @@ class MovieFragment : Fragment() {
         upcomingAdapter.onClick = {
             val intent = Intent(activity, DetailActivity::class.java)
             intent.putExtra(DetailActivity.ID_KEY, it.id.toString())
+            intent.putExtra(DetailActivity.TYPE_KEY, 101)
             startActivity(intent)
         }
     }

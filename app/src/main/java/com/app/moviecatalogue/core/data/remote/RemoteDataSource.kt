@@ -101,7 +101,7 @@ class RemoteDataSource(private val apiService: ApiService) {
     fun getDetailMovie(id: String): Flow<ApiResponse<MovieDetailResponse>> =
         flow {
             val data = apiService.getDetailMovie(id)
-            if (data.success) {
+            if (data.id != null) {
                 emit(ApiResponse.Success(data))
             } else {
                 emit(ApiResponse.Empty)
