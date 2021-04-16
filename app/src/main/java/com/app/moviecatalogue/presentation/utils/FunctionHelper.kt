@@ -20,6 +20,18 @@ fun String?.dateFormat(context: Context): String {
     }
 }
 
+fun List<Int>.toStringList(): String {
+    val sb = StringBuilder()
+    for (i in this.indices) {
+        if (i == 0) {
+            sb.append(this[i].runtimeFormat())
+        } else {
+            sb.append(", ${i.runtimeFormat()}")
+        }
+    }
+    return sb.toString()
+}
+
 fun Int.runtimeFormat(): String {
     return if (this > 60) {
         val hours = this / 60

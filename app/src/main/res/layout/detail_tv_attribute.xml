@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/poster"
+        android:layout_width="100dp"
+        android:layout_height="125dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:elevation="9dp"
+        android:scaleType="centerCrop"
+        android:src="@color/light_gray"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:riv_corner_radius="10dp"
+        tools:src="@tools:sample/backgrounds/scenic" />
+
+    <TextView
+        android:id="@+id/title"
+        style="@style/Theme.MovieCatalogue.Text.Medium16"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp"
+        android:gravity="center_vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/poster"
+        app:layout_constraintTop_toTopOf="@+id/poster"
+        tools:text="Nanatsu no Taizai : Kamigami no Gekirin" />
+
+    <TextView
+        android:id="@+id/label_first_date"
+        style="@style/Theme.MovieCatalogue.Text.Regular14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/first_air_date"
+        android:textColor="@color/dark_gray"
+        app:layout_constraintStart_toStartOf="@+id/title"
+        app:layout_constraintTop_toBottomOf="@+id/title" />
+
+    <TextView
+        android:id="@+id/label_last"
+        style="@style/Theme.MovieCatalogue.Text.Regular14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="@string/last_air_date"
+        android:textColor="@color/dark_gray"
+        app:layout_constraintStart_toStartOf="@+id/title"
+        app:layout_constraintTop_toBottomOf="@+id/label_first_date" />
+
+    <TextView
+        android:id="@+id/label_runtime"
+        style="@style/Theme.MovieCatalogue.Text.Regular14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="@string/runtime"
+        android:textColor="@color/dark_gray"
+        app:layout_constraintStart_toStartOf="@+id/title"
+        app:layout_constraintTop_toBottomOf="@+id/label_last" />
+
+    <TextView
+        android:id="@+id/first_date"
+        style="@style/Theme.MovieCatalogue.Text.Regular14"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/label_first_date"
+        app:layout_constraintEnd_toEndOf="@+id/title"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintTop_toTopOf="@+id/label_first_date"
+        tools:text="March 14, 2021" />
+
+    <TextView
+        android:id="@+id/last_date"
+        style="@style/Theme.MovieCatalogue.Text.Regular14"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/label_last"
+        app:layout_constraintEnd_toEndOf="@+id/first_date"
+        app:layout_constraintStart_toStartOf="@+id/first_date"
+        app:layout_constraintTop_toTopOf="@+id/label_last"
+        tools:text="March 14, 2021" />
+
+    <TextView
+        android:id="@+id/runtime"
+        style="@style/Theme.MovieCatalogue.Text.Regular14"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/label_runtime"
+        app:layout_constraintEnd_toEndOf="@+id/last_date"
+        app:layout_constraintStart_toStartOf="@+id/last_date"
+        app:layout_constraintTop_toTopOf="@+id/label_runtime"
+        tools:text="2 hours 30 minutes" />
+
+    <TextView
+        android:id="@+id/rating"
+        style="@style/Theme.MovieCatalogue.Text.Medium14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:gravity="center_vertical"
+        android:textColor="@color/secondaryColor"
+        app:drawableStartCompat="@drawable/ic_star"
+        app:layout_constraintStart_toStartOf="@+id/label_runtime"
+        app:layout_constraintTop_toBottomOf="@+id/label_runtime"
+        tools:text="10.0" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="240dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_genre"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:layout_constraintEnd_toEndOf="@+id/runtime"
+        app:layout_constraintStart_toStartOf="@+id/poster"
+        app:layout_constraintTop_toBottomOf="@+id/rating"
+        tools:listitem="@layout/detail_category_item" />
+
+    <TextView
+        android:id="@+id/tagline"
+        style="@style/Theme.MovieCatalogue.Text.Regular14"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="@+id/rv_genre"
+        app:layout_constraintStart_toStartOf="@+id/rv_genre"
+        app:layout_constraintTop_toBottomOf="@+id/rv_genre"
+        tools:text="Satte, Satte, Satte" />
+
+    <View
+        android:id="@+id/view2"
+        android:layout_width="0dp"
+        android:layout_height="4dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/light_gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tagline" />
+
+    <TextView
+        android:id="@+id/label_episodes"
+        style="@style/Theme.MovieCatalogue.Text.Medium16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/episodes"
+        app:layout_constraintBottom_toTopOf="@+id/episodes"
+        app:layout_constraintEnd_toStartOf="@+id/view3"
+        app:layout_constraintStart_toStartOf="@+id/view2"
+        app:layout_constraintTop_toBottomOf="@+id/view2"
+        app:layout_constraintVertical_chainStyle="spread" />
+
+    <TextView
+        android:id="@+id/episodes"
+        style="@style/Theme.MovieCatalogue.Text.Regular14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="5"
+        app:layout_constraintBottom_toTopOf="@+id/view4"
+        app:layout_constraintEnd_toEndOf="@+id/label_episodes"
+        app:layout_constraintStart_toStartOf="@+id/label_episodes"
+        app:layout_constraintTop_toBottomOf="@+id/label_episodes" />
+
+
+    <View
+        android:id="@+id/view3"
+        android:layout_width="1dp"
+        android:layout_height="70dp"
+        android:background="@color/light_gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view2" />
+
+    <TextView
+        android:id="@+id/label_seasons"
+        style="@style/Theme.MovieCatalogue.Text.Medium16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/seasons"
+        app:layout_constraintBottom_toTopOf="@+id/seasons"
+        app:layout_constraintEnd_toEndOf="@+id/view2"
+        app:layout_constraintStart_toEndOf="@+id/view3"
+        app:layout_constraintTop_toBottomOf="@+id/view2"
+        app:layout_constraintVertical_chainStyle="spread" />
+
+    <TextView
+        android:id="@+id/seasons"
+        style="@style/Theme.MovieCatalogue.Text.Regular14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="5"
+        app:layout_constraintBottom_toTopOf="@+id/view4"
+        app:layout_constraintEnd_toEndOf="@+id/label_seasons"
+        app:layout_constraintStart_toStartOf="@+id/label_seasons"
+        app:layout_constraintTop_toBottomOf="@+id/label_seasons" />
+
+
+    <View
+        android:id="@+id/view4"
+        android:layout_width="0dp"
+        android:layout_height="4dp"
+        android:background="@color/light_gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view3" />
+
+    <TextView
+        android:id="@+id/label_overview"
+        style="@style/Theme.MovieCatalogue.Text.Medium14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/overview"
+        app:layout_constraintStart_toStartOf="@+id/rv_genre"
+        app:layout_constraintTop_toBottomOf="@+id/view4" />
+
+    <TextView
+        android:id="@+id/overview"
+        style="@style/Theme.MovieCatalogue.Text.Regular14"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/rv_genre"
+        app:layout_constraintStart_toStartOf="@+id/rv_genre"
+        app:layout_constraintTop_toBottomOf="@+id/label_overview"
+        tools:text="This is an overview for the movie" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

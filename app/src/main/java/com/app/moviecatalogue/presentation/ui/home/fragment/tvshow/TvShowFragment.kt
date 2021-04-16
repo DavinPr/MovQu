@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -36,6 +37,8 @@ class TvShowFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.searchField.setOnClickListener { implementedSoon() }
+
         val discoverAdapter = FilmItemCarouselAdapter<TvShow>()
         viewModel.getTvDiscover.observe(viewLifecycleOwner) { tv ->
             val data = tv.data
@@ -56,7 +59,7 @@ class TvShowFragment : Fragment() {
                 }
             }
         }
-
+        binding.discoverLayout.viewAll.setOnClickListener { implementedSoon() }
         binding.discoverLayout.viewpagerFilm.apply {
             adapter = discoverAdapter
             clipToPadding = false
@@ -67,6 +70,14 @@ class TvShowFragment : Fragment() {
             compositePageTransformer.addTransformer(MarginPageTransformer(40))
             setPageTransformer(compositePageTransformer)
             binding.discoverLayout.indicator.setViewPager2(this)
+
+            binding.discoverLayout.btnNext.setOnClickListener {
+                setCurrentItem(currentItem + 1, true)
+            }
+
+            binding.discoverLayout.btnPrev.setOnClickListener {
+                setCurrentItem(currentItem - 1, true)
+            }
 
             registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
@@ -121,6 +132,7 @@ class TvShowFragment : Fragment() {
 
 
         binding.airingTodayLayout.apply {
+            viewAll.setOnClickListener { implementedSoon() }
             tvTitleCategory.text = resources.getString(R.string.airing_today)
             rvFilm.also {
                 it.adapter = airingTodayAdapter
@@ -147,6 +159,7 @@ class TvShowFragment : Fragment() {
         }
 
         binding.onTheAirLayout.apply {
+            viewAll.setOnClickListener { implementedSoon() }
             tvTitleCategory.text = resources.getString(R.string.on_the_air)
             rvFilm.also {
                 it.layoutManager =
@@ -167,6 +180,10 @@ class TvShowFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun implementedSoon() {
+        Toast.makeText(requireContext(), "Implemented Soon", Toast.LENGTH_SHORT).show()
     }
 
 }

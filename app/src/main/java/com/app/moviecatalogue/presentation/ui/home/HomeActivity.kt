@@ -1,6 +1,7 @@
 package com.app.moviecatalogue.presentation.ui.home
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -62,6 +63,9 @@ class HomeActivity : AppCompatActivity() {
                 )
         }
         binding.toolbar.fragmentTitle.text = toolbarSubTitle
+        binding.toolbar.btnProfile.setOnClickListener {
+            Toast.makeText(this, "Implemented Soon", Toast.LENGTH_SHORT).show()
+        }
         setAdapter()
 
     }

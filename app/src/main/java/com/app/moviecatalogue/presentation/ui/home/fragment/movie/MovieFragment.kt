@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -38,6 +39,8 @@ class MovieFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.searchField.setOnClickListener { implementedSoon() }
+
         val discoverAdapter = FilmItemCarouselAdapter<Movie>()
         viewModel.getDiscover.observe(viewLifecycleOwner) { movies ->
             val data = movies.data
@@ -59,6 +62,9 @@ class MovieFragment : Fragment() {
             }
         }
 
+        binding.discoverLayout.viewAll.setOnClickListener {
+            implementedSoon()
+        }
         binding.discoverLayout.viewpagerFilm.apply {
             adapter = discoverAdapter
             clipToPadding = false
@@ -69,6 +75,14 @@ class MovieFragment : Fragment() {
             compositePageTransformer.addTransformer(MarginPageTransformer(40))
             setPageTransformer(compositePageTransformer)
             binding.discoverLayout.indicator.setViewPager2(this)
+
+            binding.discoverLayout.btnNext.setOnClickListener {
+                setCurrentItem(currentItem+1, true)
+            }
+
+            binding.discoverLayout.btnPrev.setOnClickListener {
+                setCurrentItem(currentItem-1, true)
+            }
 
             registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
@@ -123,6 +137,7 @@ class MovieFragment : Fragment() {
 
 
         binding.nowPlayingLayout.apply {
+            viewAll.setOnClickListener { implementedSoon() }
             tvTitleCategory.text = resources.getString(R.string.now_playing)
             rvFilm.also {
                 it.adapter = nowPlayingAdapter
@@ -149,6 +164,7 @@ class MovieFragment : Fragment() {
         }
 
         binding.upcomingLayout.apply {
+            viewAll.setOnClickListener { implementedSoon() }
             tvTitleCategory.text = resources.getString(R.string.upcoming)
             rvFilm.also {
                 it.layoutManager =
@@ -169,5 +185,9 @@ class MovieFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun implementedSoon(){
+        Toast.makeText(requireContext(), "Implemented Soon", Toast.LENGTH_SHORT).show()
     }
 }

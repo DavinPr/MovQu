@@ -17,12 +17,26 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <include
-            android:id="@+id/detail_film_attribute"
-            layout="@layout/detail_film_attribute"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/backdrop" />
+            android:layout_height="match_parent">
+
+            <include
+                android:id="@+id/detail_movie_attribute"
+                layout="@layout/detail_movie_attribute"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
+
+            <include
+                android:id="@+id/detail_tv_attribute"
+                layout="@layout/detail_tv_attribute"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
+
+        </FrameLayout>
+
 
     </androidx.core.widget.NestedScrollView>
 

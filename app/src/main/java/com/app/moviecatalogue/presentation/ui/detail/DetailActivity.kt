@@ -1,6 +1,8 @@
 package com.app.moviecatalogue.presentation.ui.detail
 
 import android.os.Bundle
+import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.app.moviecatalogue.R
 import com.app.moviecatalogue.core.data.Resource
@@ -8,20 +10,19 @@ import com.app.moviecatalogue.core.domain.usecase.model.MovieDetail
 import com.app.moviecatalogue.core.domain.usecase.model.MovieGenre
 import com.app.moviecatalogue.core.domain.usecase.model.TvDetail
 import com.app.moviecatalogue.core.domain.usecase.model.TvGenre
-import com.app.moviecatalogue.databinding.ActivityDetailMovieBinding
-import com.app.moviecatalogue.databinding.ActivityDetailTvBinding
+import com.app.moviecatalogue.databinding.ActivityDetailBinding
 import com.app.moviecatalogue.presentation.ui.detail.adapter.GenreListAdapter
 import com.app.moviecatalogue.presentation.utils.dateFormat
 import com.app.moviecatalogue.presentation.utils.runtimeFormat
 import com.app.moviecatalogue.presentation.utils.toImageurl
+import com.app.moviecatalogue.presentation.utils.toStringList
 import com.bumptech.glide.Glide
 import com.google.android.flexbox.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class DetailActivity : AppCompatActivity() {
+class DetailActivity : AppCompatActivity(), View.OnClickListener {
 
-    private lateinit var bindingMovie: ActivityDetailMovieBinding
-    private lateinit var bindingTv: ActivityDetailTvBinding
+    private lateinit var binding: ActivityDetailBinding
     private val viewModel: DetailViewModel by viewModel()
 
     companion object {
@@ -31,30 +32,33 @@ class DetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityDetailBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
         val type = intent.getIntExtra(TYPE_KEY, 101)
+        val id = intent.getStringExtra(ID_KEY)
         when (type) {
             101 -> {
-                bindingMovie = ActivityDetailMovieBinding.inflate(layoutInflater)
-                setContentView(bindingMovie.root)
+                binding.detailMovieAttribute.apply {
+                    root.visibility = View.VISIBLE
+                }
+                if (id != null) setDetailMovieView(id)
             }
             102 -> {
-                bindingTv = ActivityDetailTvBinding.inflate(layoutInflater)
-                setContentView(bindingTv.root)
+                binding.detailTvAttribute.apply {
+                    root.visibility = View.VISIBLE
+                }
+                if (id != null) setDetailTvView(id)
             }
         }
-
-        val id = intent.getStringExtra(ID_KEY)
-
-        if (id != null) {
-            when (type) {
-                101 -> setDetailMovieView(id)
-                102 -> setDetailTvView(id)
-            }
+        binding.toolbar.apply {
+            btnBack.setOnClickListener(this@DetailActivity)
+            btnFavorite.setOnClickListener(this@DetailActivity)
         }
     }
 
     private fun setDetailMovieView(id: String) {
-        bindingMovie.toolbar.activityTitle.text = resources.getString(R.string.movie)
+        binding.toolbar.activityTitle.text = resources.getString(R.string.movie)
         viewModel.getDetailMovie(id).observe(this) { detail ->
             when (detail) {
                 is Resource.Loading -> {
@@ -72,7 +76,7 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun setDetailTvView(id: String) {
-        bindingTv.toolbar.activityTitle.text = resources.getString(R.string.tvshow)
+        binding.toolbar.activityTitle.text = resources.getString(R.string.tvshow)
         viewModel.getDetailTv(id).observe(this) { detail ->
             when (detail) {
                 is Resource.Loading -> {
@@ -90,7 +94,7 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun setDataMovie(detail: MovieDetail) {
-        bindingMovie.detailFilmAttribute.apply {
+        binding.detailMovieAttribute.apply {
             Glide.with(this@DetailActivity)
                 .load(detail.poster_path?.toImageurl())
                 .into(poster)
@@ -116,16 +120,23 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun setDataTv(detail: TvDetail) {
-        bindingTv.detailFilmAttribute.apply {
+        binding.detailTvAttribute.apply {
             Glide.with(this@DetailActivity)
                 .load(detail.posterPath?.toImageurl())
                 .into(poster)
 
             title.text = detail.name
-            date.text = detail.firstAirDate.dateFormat(this@DetailActivity)
+            firstDate.text = detail.firstAirDate?.dateFormat(this@DetailActivity) ?: "-"
+            lastDate.text = detail.lastAirDate?.dateFormat(this@DetailActivity) ?: "-"
             rating.text = detail.voteAverage.toString()
             overview.text = detail.overview
-            tagline.text = detail.tagline
+            episodes.text = detail.numberOfEpisodes?.toString() ?: "-"
+            seasons.text = detail.numberOfSeasons?.toString() ?: "-"
+
+            detail.episodeRunTime?.let {
+                if (it.isNotEmpty()) runtime.text = it.toStringList()
+            }
+            tagline.text = detail.tagline ?: resources.getString(R.string.no_tagline)
 
             val genreAdapter = GenreListAdapter<TvGenre>()
             detail.genres?.let { genreAdapter.setGenre(it) }
@@ -136,6 +147,15 @@ class DetailActivity : AppCompatActivity() {
                 flexboxLm.flexWrap = FlexWrap.WRAP
                 layoutManager = flexboxLm
                 hasFixedSize()
+            }
+        }
+    }
+
+    override fun onClick(v: View?) {
+        when (v?.id) {
+            binding.toolbar.btnBack.id -> finish()
+            binding.toolbar.btnFavorite.id -> {
+                Toast.makeText(this, "Implemented soon", Toast.LENGTH_SHORT).show()
             }
         }
     }

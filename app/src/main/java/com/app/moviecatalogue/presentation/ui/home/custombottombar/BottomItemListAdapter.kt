@@ -1,5 +1,7 @@
 package com.app.moviecatalogue.presentation.ui.home.custombottombar
 
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -83,10 +85,12 @@ class BottomItemListAdapter(
 
         init {
             binding.bottomIconParent.setOnClickListener {
-                onClick?.invoke(bottomItems[adapterPosition])
-                selected = bottomItems[adapterPosition].itemId
-                selectedStyle(bottomItems[adapterPosition])
-                notifyDataSetChanged()
+                Handler(Looper.getMainLooper()).postDelayed({
+                    onClick?.invoke(bottomItems[adapterPosition])
+                    selected = bottomItems[adapterPosition].itemId
+                    selectedStyle(bottomItems[adapterPosition])
+                    notifyDataSetChanged()
+                }, 200)
             }
         }
     }

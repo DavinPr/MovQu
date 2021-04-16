@@ -17,8 +17,8 @@
             style="@style/Theme.MovieCatalogue.Text.Semibold20"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/app_name"
             android:layout_marginTop="16dp"
+            android:text="@string/app_name"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -38,8 +38,9 @@
 
         <ImageView
             android:id="@+id/btn_profile"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="@android:color/transparent"
             android:src="@drawable/ic_account"
             app:layout_constraintBottom_toBottomOf="@+id/fragment_title"
             app:layout_constraintEnd_toEndOf="parent"

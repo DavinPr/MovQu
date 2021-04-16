@@ -1,7 +1,6 @@
 package com.app.moviecatalogue.core.domain.usecase.model
 
 data class TvDetail(
-
 	val numberOfEpisodes: Int? = null,
 	val backdropPath: String? = null,
 	val genres: List<TvGenre>? = null,
