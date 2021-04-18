@@ -8,4 +8,5 @@ class MovieViewModel(useCase: AppUseCase) : ViewModel() {
     val getDiscover = useCase.getListMovieDiscover().asLiveData()
     val getNowPlaying = useCase.getListMovieNowPlaying().asLiveData()
     val getUpcoming = useCase.getListMovieUpcoming().asLiveData()
+
 }

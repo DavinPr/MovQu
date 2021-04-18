@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <com.makeramen.roundedimageview.RoundedImageView
-        android:id="@+id/poster"
+        android:id="@+id/poster_tv"
         android:layout_width="100dp"
         android:layout_height="125dp"
         android:layout_marginStart="16dp"
@@ -20,7 +20,7 @@
         tools:src="@tools:sample/backgrounds/scenic" />
 
     <TextView
-        android:id="@+id/title"
+        android:id="@+id/title_tv"
         style="@style/Theme.MovieCatalogue.Text.Medium16"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -28,78 +28,78 @@
         android:layout_marginEnd="16dp"
         android:gravity="center_vertical"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/poster"
-        app:layout_constraintTop_toTopOf="@+id/poster"
+        app:layout_constraintStart_toEndOf="@+id/poster_tv"
+        app:layout_constraintTop_toTopOf="@+id/poster_tv"
         tools:text="Nanatsu no Taizai : Kamigami no Gekirin" />
 
     <TextView
-        android:id="@+id/label_first_date"
+        android:id="@+id/label_first_date_tv"
         style="@style/Theme.MovieCatalogue.Text.Regular14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/first_air_date"
         android:textColor="@color/dark_gray"
-        app:layout_constraintStart_toStartOf="@+id/title"
-        app:layout_constraintTop_toBottomOf="@+id/title" />
+        app:layout_constraintStart_toStartOf="@+id/title_tv"
+        app:layout_constraintTop_toBottomOf="@+id/title_tv" />
 
     <TextView
-        android:id="@+id/label_last"
+        android:id="@+id/label_last_tv"
         style="@style/Theme.MovieCatalogue.Text.Regular14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:text="@string/last_air_date"
         android:textColor="@color/dark_gray"
-        app:layout_constraintStart_toStartOf="@+id/title"
-        app:layout_constraintTop_toBottomOf="@+id/label_first_date" />
+        app:layout_constraintStart_toStartOf="@+id/title_tv"
+        app:layout_constraintTop_toBottomOf="@+id/label_first_date_tv" />
 
     <TextView
-        android:id="@+id/label_runtime"
+        android:id="@+id/label_runtime_tv"
         style="@style/Theme.MovieCatalogue.Text.Regular14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:text="@string/runtime"
         android:textColor="@color/dark_gray"
-        app:layout_constraintStart_toStartOf="@+id/title"
-        app:layout_constraintTop_toBottomOf="@+id/label_last" />
+        app:layout_constraintStart_toStartOf="@+id/title_tv"
+        app:layout_constraintTop_toBottomOf="@+id/label_last_tv" />
 
     <TextView
-        android:id="@+id/first_date"
+        android:id="@+id/first_date_tv"
         style="@style/Theme.MovieCatalogue.Text.Regular14"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/label_first_date"
-        app:layout_constraintEnd_toEndOf="@+id/title"
-        app:layout_constraintStart_toStartOf="@+id/guideline4"
-        app:layout_constraintTop_toTopOf="@+id/label_first_date"
+        app:layout_constraintBottom_toBottomOf="@+id/label_first_date_tv"
+        app:layout_constraintEnd_toEndOf="@+id/title_tv"
+        app:layout_constraintStart_toStartOf="@+id/guideline5"
+        app:layout_constraintTop_toTopOf="@+id/label_first_date_tv"
         tools:text="March 14, 2021" />
 
     <TextView
-        android:id="@+id/last_date"
+        android:id="@+id/last_date_tv"
         style="@style/Theme.MovieCatalogue.Text.Regular14"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/label_last"
-        app:layout_constraintEnd_toEndOf="@+id/first_date"
-        app:layout_constraintStart_toStartOf="@+id/first_date"
-        app:layout_constraintTop_toTopOf="@+id/label_last"
+        app:layout_constraintBottom_toBottomOf="@+id/label_last_tv"
+        app:layout_constraintEnd_toEndOf="@+id/first_date_tv"
+        app:layout_constraintStart_toStartOf="@+id/first_date_tv"
+        app:layout_constraintTop_toTopOf="@+id/label_last_tv"
         tools:text="March 14, 2021" />
 
     <TextView
-        android:id="@+id/runtime"
+        android:id="@+id/runtime_tv"
         style="@style/Theme.MovieCatalogue.Text.Regular14"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/label_runtime"
-        app:layout_constraintEnd_toEndOf="@+id/last_date"
-        app:layout_constraintStart_toStartOf="@+id/last_date"
-        app:layout_constraintTop_toTopOf="@+id/label_runtime"
+        app:layout_constraintBottom_toBottomOf="@+id/label_runtime_tv"
+        app:layout_constraintEnd_toEndOf="@+id/last_date_tv"
+        app:layout_constraintStart_toStartOf="@+id/last_date_tv"
+        app:layout_constraintTop_toTopOf="@+id/label_runtime_tv"
         tools:text="2 hours 30 minutes" />
 
     <TextView
-        android:id="@+id/rating"
+        android:id="@+id/rating_tv"
         style="@style/Theme.MovieCatalogue.Text.Medium14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -107,38 +107,38 @@
         android:gravity="center_vertical"
         android:textColor="@color/secondaryColor"
         app:drawableStartCompat="@drawable/ic_star"
-        app:layout_constraintStart_toStartOf="@+id/label_runtime"
-        app:layout_constraintTop_toBottomOf="@+id/label_runtime"
+        app:layout_constraintStart_toStartOf="@+id/label_runtime_tv"
+        app:layout_constraintTop_toBottomOf="@+id/label_runtime_tv"
         tools:text="10.0" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline4"
+        android:id="@+id/guideline5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_begin="240dp" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_genre"
+        android:id="@+id/rv_genre_tv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:orientation="horizontal"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:layout_constraintEnd_toEndOf="@+id/runtime"
-        app:layout_constraintStart_toStartOf="@+id/poster"
-        app:layout_constraintTop_toBottomOf="@+id/rating"
+        app:layout_constraintEnd_toEndOf="@+id/runtime_tv"
+        app:layout_constraintStart_toStartOf="@+id/poster_tv"
+        app:layout_constraintTop_toBottomOf="@+id/rating_tv"
         tools:listitem="@layout/detail_category_item" />
 
     <TextView
-        android:id="@+id/tagline"
+        android:id="@+id/tagline_tv"
         style="@style/Theme.MovieCatalogue.Text.Regular14"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="@+id/rv_genre"
-        app:layout_constraintStart_toStartOf="@+id/rv_genre"
-        app:layout_constraintTop_toBottomOf="@+id/rv_genre"
+        app:layout_constraintEnd_toEndOf="@+id/rv_genre_tv"
+        app:layout_constraintStart_toStartOf="@+id/rv_genre_tv"
+        app:layout_constraintTop_toBottomOf="@+id/rv_genre_tv"
         tools:text="Satte, Satte, Satte" />
 
     <View
@@ -149,7 +149,7 @@
         android:background="@color/light_gray"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tagline" />
+        app:layout_constraintTop_toBottomOf="@+id/tagline_tv" />
 
     <TextView
         android:id="@+id/label_episodes"
@@ -218,24 +218,24 @@
         app:layout_constraintTop_toBottomOf="@+id/view3" />
 
     <TextView
-        android:id="@+id/label_overview"
+        android:id="@+id/label_overview_tv"
         style="@style/Theme.MovieCatalogue.Text.Medium14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/overview"
-        app:layout_constraintStart_toStartOf="@+id/rv_genre"
+        app:layout_constraintStart_toStartOf="@+id/rv_genre_tv"
         app:layout_constraintTop_toBottomOf="@+id/view4" />
 
     <TextView
-        android:id="@+id/overview"
+        android:id="@+id/overview_tv"
         style="@style/Theme.MovieCatalogue.Text.Regular14"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="@+id/rv_genre"
-        app:layout_constraintStart_toStartOf="@+id/rv_genre"
-        app:layout_constraintTop_toBottomOf="@+id/label_overview"
+        app:layout_constraintEnd_toEndOf="@+id/rv_genre_tv"
+        app:layout_constraintStart_toStartOf="@+id/rv_genre_tv"
+        app:layout_constraintTop_toBottomOf="@+id/label_overview_tv"
         tools:text="This is an overview for the movie" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

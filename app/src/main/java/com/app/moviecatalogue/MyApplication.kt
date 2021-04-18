@@ -8,6 +8,7 @@ import com.app.moviecatalogue.presentation.di.useCaseModule
 import com.app.moviecatalogue.presentation.di.viewModelModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
+import org.koin.core.context.stopKoin
 import timber.log.Timber
 import timber.log.Timber.DebugTree
 
@@ -31,6 +32,11 @@ class MyApplication : Application() {
                 viewModelModule
             )
         }
+    }
+
+    override fun onTerminate() {
+        stopKoin()
+        super.onTerminate()
     }
 
 }

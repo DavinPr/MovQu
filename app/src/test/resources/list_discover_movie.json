@@ -1,0 +1,68 @@
+{
+  "page": 1,
+  "results": [
+    {
+      "adult": false,
+      "backdrop_path": "/inJjDhCjfhh3RtrJWBmmDqeuSYC.jpg",
+      "genre_ids": [
+        28,
+        878
+      ],
+      "id": 399566,
+      "original_language": "en",
+      "original_title": "Godzilla vs. Kong",
+      "overview": "In a time when monsters walk the Earth, humanity’s fight for its future sets Godzilla and Kong on a collision course that will see the two most powerful forces of nature on the planet collide in a spectacular battle for the ages.",
+      "popularity": 5405.33,
+      "poster_path": "/pgqgaUx1cJb5oZQQ5v0tNARCeBp.jpg",
+      "release_date": "2021-03-24",
+      "title": "Godzilla vs. Kong",
+      "video": false,
+      "vote_average": 8.3,
+      "vote_count": 4497
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/pcDc2WJAYGJTTvRSEIpRZwM3Ola.jpg",
+      "genre_ids": [
+        28,
+        12,
+        14,
+        878
+      ],
+      "id": 791373,
+      "original_language": "en",
+      "original_title": "Zack Snyder's Justice League",
+      "overview": "Determined to ensure Superman's ultimate sacrifice was not in vain, Bruce Wayne aligns forces with Diana Prince with plans to recruit a team of metahumans to protect the world from an approaching threat of catastrophic proportions.",
+      "popularity": 2743.895,
+      "poster_path": "/tnAuB8q5vv7Ax9UAEje5Xi4BXik.jpg",
+      "release_date": "2021-03-18",
+      "title": "Zack Snyder's Justice League",
+      "video": false,
+      "vote_average": 8.5,
+      "vote_count": 4933
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/5NxjLfs7Bi07bfZCRl9CCnUw7AA.jpg",
+      "genre_ids": [
+        878,
+        28,
+        12,
+        53
+      ],
+      "id": 412656,
+      "original_language": "en",
+      "original_title": "Chaos Walking",
+      "overview": "Two unlikely companions embark on a perilous adventure through the badlands of an unexplored planet as they try to escape a dangerous and disorienting reality, where all inner thoughts are seen and heard by everyone.",
+      "popularity": 2136.844,
+      "poster_path": "/9kg73Mg8WJKlB9Y2SAJzeDKAnuB.jpg",
+      "release_date": "2021-02-24",
+      "title": "Chaos Walking",
+      "video": false,
+      "vote_average": 7.5,
+      "vote_count": 368
+    }
+  ],
+  "total_pages": 500,
+  "total_results": 10000
+}

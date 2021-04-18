@@ -3,8 +3,6 @@ package com.app.moviecatalogue.core.data.remote.response
 import com.google.gson.annotations.SerializedName
 
 data class MovieDetailResponse(
-    @field:SerializedName("success")
-    val success: Boolean = true,
     @field:SerializedName("backdrop_path")
     val backdrop_path: String,
     @field:SerializedName("genres")

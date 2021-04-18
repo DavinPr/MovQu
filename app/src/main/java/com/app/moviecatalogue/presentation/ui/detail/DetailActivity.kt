@@ -97,18 +97,18 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
         binding.detailMovieAttribute.apply {
             Glide.with(this@DetailActivity)
                 .load(detail.poster_path?.toImageurl())
-                .into(poster)
+                .into(posterMovie)
 
-            title.text = detail.title
-            date.text = detail.release_date.dateFormat(this@DetailActivity)
-            runtime.text = detail.runtime?.runtimeFormat()
-            rating.text = detail.vote_average.toString()
-            overview.text = detail.overview
-            tagline.text = detail.tagline
+            titleMovie.text = detail.title
+            dateMovie.text = detail.release_date.dateFormat(this@DetailActivity)
+            runtimeMovie.text = detail.runtime?.runtimeFormat()
+            ratingMovie.text = detail.vote_average.toString()
+            overviewMovie.text = detail.overview
+            taglineMovie.text = detail.tagline
 
             val genreAdapter = GenreListAdapter<MovieGenre>()
             detail.genres?.let { genreAdapter.setGenre(it) }
-            rvGenre.apply {
+            rvGenreMovie.apply {
                 adapter = genreAdapter
                 val flexboxLm = FlexboxLayoutManager(this@DetailActivity)
                 flexboxLm.alignItems = AlignItems.STRETCH
@@ -123,24 +123,24 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
         binding.detailTvAttribute.apply {
             Glide.with(this@DetailActivity)
                 .load(detail.posterPath?.toImageurl())
-                .into(poster)
+                .into(posterTv)
 
-            title.text = detail.name
-            firstDate.text = detail.firstAirDate?.dateFormat(this@DetailActivity) ?: "-"
-            lastDate.text = detail.lastAirDate?.dateFormat(this@DetailActivity) ?: "-"
-            rating.text = detail.voteAverage.toString()
-            overview.text = detail.overview
+            titleTv.text = detail.name
+            firstDateTv.text = detail.firstAirDate?.dateFormat(this@DetailActivity) ?: "-"
+            lastDateTv.text = detail.lastAirDate?.dateFormat(this@DetailActivity) ?: "-"
+            ratingTv.text = detail.voteAverage.toString()
+            overviewTv.text = detail.overview
             episodes.text = detail.numberOfEpisodes?.toString() ?: "-"
             seasons.text = detail.numberOfSeasons?.toString() ?: "-"
 
             detail.episodeRunTime?.let {
-                if (it.isNotEmpty()) runtime.text = it.toStringList()
+                if (it.isNotEmpty()) runtimeTv.text = it.toStringList()
             }
-            tagline.text = detail.tagline ?: resources.getString(R.string.no_tagline)
+            taglineTv.text = detail.tagline ?: resources.getString(R.string.no_tagline)
 
             val genreAdapter = GenreListAdapter<TvGenre>()
             detail.genres?.let { genreAdapter.setGenre(it) }
-            rvGenre.apply {
+            rvGenreTv.apply {
                 adapter = genreAdapter
                 val flexboxLm = FlexboxLayoutManager(this@DetailActivity)
                 flexboxLm.alignItems = AlignItems.STRETCH
