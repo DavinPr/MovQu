@@ -74,6 +74,9 @@ dependencies {
 
     implementation 'com.google.android:flexbox:2.0.1'
 
+    //lottie
+    implementation 'com.airbnb.android:lottie:3.7.0'
+
     //Round Image View
     implementation 'com.makeramen:roundedimageview:2.3.0'
 

@@ -6,7 +6,6 @@ import com.app.moviecatalogue.core.data.local.LocalDataSource
 import com.app.moviecatalogue.core.data.local.entity.*
 import com.app.moviecatalogue.core.data.remote.RemoteDataSource
 import com.app.moviecatalogue.core.data.remote.network.ApiService
-import com.app.moviecatalogue.utils.enqueueResponse
 import com.app.moviecatalogue.presentation.utils.DataDummy
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -155,8 +154,6 @@ class RepositoryTest {
 
     @Test
     fun getDetailMovie() {
-        mockWebServer.enqueueResponse("detail_movie.json", 200)
-
         runBlocking {
             when (val detail = repository.getDetailMovie(399566.toString()).first()) {
                 is Resource.Success -> {
@@ -165,7 +162,7 @@ class RepositoryTest {
                     assertEquals("Godzilla vs. Kong", detail.data?.title)
                 }
                 is Resource.Error -> {
-                    println("Error")
+                    println("Test Failed")
                 }
             }
         }
@@ -173,8 +170,6 @@ class RepositoryTest {
 
     @Test
     fun getDetailTv() {
-        mockWebServer.enqueueResponse("detail_tv.json", 200)
-
         runBlocking {
             when (val detail = repository.getDetailTv(1416.toString()).first()) {
                 is Resource.Success -> {
@@ -183,9 +178,38 @@ class RepositoryTest {
                     assertEquals("Grey's Anatomy", detail.data?.name)
                 }
                 is Resource.Error -> {
-                    println("Error")
+                    println("Test Failed")
                 }
             }
+        }
+    }
+
+    @Test
+    fun `Test if fetch data error`() {
+        runBlocking {
+            when (val detail = repository.getDetailMovie(0.toString()).first()) {
+                is Resource.Success -> {
+                    println("Test Failed")
+                }
+                is Resource.Error -> {
+                    assertNotNull(detail.message)
+                }
+            }
+        }
+    }
+
+    @Test
+    fun `Test if data empty`() {
+        val discoverEntity: Flow<List<DiscoverMovieEntity>> =
+            flow {
+                emit(listOf<DiscoverMovieEntity>())
+            }
+        `when`(local.getAllMovieDiscover()).thenReturn(discoverEntity)
+
+        runBlockingTest {
+            val data = repository.getListMovieDiscover().first().data
+            assertNotNull(data)
+            assertEquals(0, data?.size)
         }
     }
 

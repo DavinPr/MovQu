@@ -12,18 +12,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MovieCatalogue">
-        <activity android:name=".presentation.ui.detail.DetailActivity" />
-        <activity android:name=".presentation.ui.home.HomeActivity">
+        <activity
+            android:name=".presentation.ui.splashscreen.SplashScreenActivity"
+            android:theme="@style/Theme.MovieCatalogue.TranslucentStatusbar">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
 
-        <meta-data
-            android:name="preloaded_fonts"
-            android:resource="@array/preloaded_fonts" />
+        </activity>
+        <activity android:name=".presentation.ui.detail.DetailActivity" />
+        <activity android:name=".presentation.ui.home.HomeActivity" />
     </application>
 
 </manifest>
