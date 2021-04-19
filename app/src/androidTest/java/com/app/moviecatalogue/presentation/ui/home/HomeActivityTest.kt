@@ -3,17 +3,19 @@ package com.app.moviecatalogue.presentation.ui.home
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.UiController
-import androidx.test.espresso.ViewAction
+import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import com.app.moviecatalogue.R
+import com.app.moviecatalogue.presentation.utils.EspressoIdlingResource
 import org.hamcrest.Description
 import org.hamcrest.Matcher
 import org.hamcrest.TypeSafeMatcher
+import org.junit.After
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
@@ -22,10 +24,18 @@ class HomeActivityTest {
     @get:Rule
     var activityRule = ActivityScenarioRule(HomeActivity::class.java)
 
+    @Before
+    fun setup() {
+        IdlingRegistry.getInstance().register(EspressoIdlingResource.idlingResource)
+    }
+
+    @After
+    fun tearDown() {
+        IdlingRegistry.getInstance().unregister(EspressoIdlingResource.idlingResource)
+    }
 
     @Test
     fun loadMovie() {
-        onView(isRoot()).perform(waitFor(1000))
         onView(withId(R.id.viewpager_film)).check(matches(isDisplayed()))
         onView(withId(R.id.btn_next)).perform(click())
         onView(withFirstIndex(withId(R.id.rv_film))).check(matches(isDisplayed()))
@@ -44,7 +54,6 @@ class HomeActivityTest {
                 click()
             )
         )
-        onView(isRoot()).perform(waitFor(1000))
         onView(withId(R.id.viewpager_film)).check(matches(isDisplayed()))
         onView(withId(R.id.btn_next)).perform(click())
         onView(withFirstIndex(withId(R.id.rv_film))).check(matches(isDisplayed()))
@@ -57,11 +66,10 @@ class HomeActivityTest {
 
     @Test
     fun loadDetailMovie() {
-        onView(isRoot()).perform(waitFor(3000))
+        onView(withFirstIndex(withId(R.id.rv_film))).check(matches(isDisplayed()))
         onView(withFirstIndex(withId(R.id.rv_film))).perform(
             RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(0, click())
         )
-        onView(isRoot()).perform(waitFor(1000))
         onView(withId(R.id.activity_title)).check(matches(isDisplayed()))
         onView(withId(R.id.activity_title)).check(matches(withText("Movie")))
         onView(withId(R.id.title_movie)).check(matches(isDisplayed()))
@@ -77,26 +85,15 @@ class HomeActivityTest {
                 click()
             )
         )
-        onView(isRoot()).perform(waitFor(3000))
+        onView(withFirstIndex(withId(R.id.rv_film))).check(matches(isDisplayed()))
         onView(withFirstIndex(withId(R.id.rv_film))).perform(
             RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(0, click())
         )
-        onView(isRoot()).perform(waitFor(1000))
         onView(withId(R.id.activity_title)).check(matches(isDisplayed()))
         onView(withId(R.id.activity_title)).check(matches(withText("Tv Show")))
         onView(withId(R.id.title_tv)).check(matches(isDisplayed()))
         onView(withId(R.id.first_date_tv)).check(matches(isDisplayed()))
         onView(withId(R.id.btn_back)).perform(click())
-    }
-
-    private fun waitFor(delay: Long): ViewAction {
-        return object : ViewAction {
-            override fun getConstraints(): Matcher<View> = isRoot()
-            override fun getDescription(): String = "wait for $delay milliseconds"
-            override fun perform(uiController: UiController, v: View?) {
-                uiController.loopMainThreadForAtLeast(delay)
-            }
-        }
     }
 
     private fun withFirstIndex(matcher: Matcher<View?>): Matcher<View?> {

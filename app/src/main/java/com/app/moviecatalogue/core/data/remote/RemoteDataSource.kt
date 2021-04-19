@@ -6,16 +6,15 @@ import com.app.moviecatalogue.core.data.remote.response.MovieDetailResponse
 import com.app.moviecatalogue.core.data.remote.response.MoviesItem
 import com.app.moviecatalogue.core.data.remote.response.TvDetailResponse
 import com.app.moviecatalogue.core.data.remote.response.TvShowItem
+import com.app.moviecatalogue.presentation.utils.EspressoIdlingResource
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.*
 
 class RemoteDataSource(private val apiService: ApiService) {
 
-    fun getListDiscoverMovie(): Flow<ApiResponse<List<MoviesItem>>> =
-        flow {
+    fun getListDiscoverMovie(): Flow<ApiResponse<List<MoviesItem>>> {
+        return flow {
+            EspressoIdlingResource.increment()
             val data = apiService.getListMovieDiscover()
             val dataArray = data.results
 
@@ -26,10 +25,14 @@ class RemoteDataSource(private val apiService: ApiService) {
             }
         }.catch { e ->
             emit(ApiResponse.Error(e.toString()))
+        }.onCompletion {
+            EspressoIdlingResource.decrement()
         }.flowOn(Dispatchers.IO)
+    }
 
-    fun getListMovieNowPlaying(): Flow<ApiResponse<List<MoviesItem>>> =
-        flow {
+    fun getListMovieNowPlaying(): Flow<ApiResponse<List<MoviesItem>>> {
+        return flow {
+            EspressoIdlingResource.increment()
             val data = apiService.getListMovieNowPlaying()
             val dataArray = data.results
 
@@ -40,10 +43,14 @@ class RemoteDataSource(private val apiService: ApiService) {
             }
         }.catch { e ->
             emit(ApiResponse.Error(e.toString()))
+        }.onCompletion {
+            EspressoIdlingResource.decrement()
         }.flowOn(Dispatchers.IO)
+    }
 
-    fun getListMovieUpcoming(): Flow<ApiResponse<List<MoviesItem>>> =
-        flow {
+    fun getListMovieUpcoming(): Flow<ApiResponse<List<MoviesItem>>> {
+        return flow {
+            EspressoIdlingResource.increment()
             val data = apiService.getListMovieUpcoming()
             val dataArray = data.results
 
@@ -54,10 +61,14 @@ class RemoteDataSource(private val apiService: ApiService) {
             }
         }.catch { e ->
             emit(ApiResponse.Error(e.toString()))
+        }.onCompletion {
+            EspressoIdlingResource.decrement()
         }.flowOn(Dispatchers.IO)
+    }
 
-    fun getListTvDiscover(): Flow<ApiResponse<List<TvShowItem>>> =
-        flow {
+    fun getListTvDiscover(): Flow<ApiResponse<List<TvShowItem>>> {
+        return flow {
+            EspressoIdlingResource.increment()
             val data = apiService.getListTvDiscover()
             val dataArray = data.results
 
@@ -68,10 +79,14 @@ class RemoteDataSource(private val apiService: ApiService) {
             }
         }.catch { e ->
             emit(ApiResponse.Error(e.toString()))
+        }.onCompletion {
+            EspressoIdlingResource.decrement()
         }.flowOn(Dispatchers.IO)
+    }
 
-    fun getListTvAiringToday(): Flow<ApiResponse<List<TvShowItem>>> =
-        flow {
+    fun getListTvAiringToday(): Flow<ApiResponse<List<TvShowItem>>> {
+        return flow {
+            EspressoIdlingResource.increment()
             val data = apiService.getListTvAiringToday()
             val dataArray = data.results
 
@@ -82,10 +97,14 @@ class RemoteDataSource(private val apiService: ApiService) {
             }
         }.catch { e ->
             emit(ApiResponse.Error(e.toString()))
+        }.onCompletion {
+            EspressoIdlingResource.decrement()
         }.flowOn(Dispatchers.IO)
+    }
 
-    fun getListTvOnTheAir(): Flow<ApiResponse<List<TvShowItem>>> =
-        flow {
+    fun getListTvOnTheAir(): Flow<ApiResponse<List<TvShowItem>>> {
+        return flow {
+            EspressoIdlingResource.increment()
             val data = apiService.getListTvOnTheAir()
             val dataArray = data.results
 
@@ -96,10 +115,14 @@ class RemoteDataSource(private val apiService: ApiService) {
             }
         }.catch { e ->
             emit(ApiResponse.Error(e.toString()))
+        }.onCompletion {
+            EspressoIdlingResource.decrement()
         }.flowOn(Dispatchers.IO)
+    }
 
-    fun getDetailMovie(id: String): Flow<ApiResponse<MovieDetailResponse>> =
-        flow {
+    fun getDetailMovie(id: String): Flow<ApiResponse<MovieDetailResponse>> {
+        return flow {
+            EspressoIdlingResource.increment()
             val data = apiService.getDetailMovie(id)
             if (data.id != null) {
                 emit(ApiResponse.Success(data))
@@ -108,10 +131,14 @@ class RemoteDataSource(private val apiService: ApiService) {
             }
         }.catch { e ->
             emit(ApiResponse.Error(e.toString()))
+        }.onCompletion {
+            EspressoIdlingResource.decrement()
         }.flowOn(Dispatchers.IO)
+    }
 
-    fun getDetailTv(id: String): Flow<ApiResponse<TvDetailResponse>> =
-        flow {
+    fun getDetailTv(id: String): Flow<ApiResponse<TvDetailResponse>> {
+        return flow {
+            EspressoIdlingResource.increment()
             val data = apiService.getDetailTv(id)
             if (data.success) {
                 emit(ApiResponse.Success(data))
@@ -120,5 +147,8 @@ class RemoteDataSource(private val apiService: ApiService) {
             }
         }.catch { e ->
             emit(ApiResponse.Error(e.toString()))
+        }.onCompletion {
+            EspressoIdlingResource.decrement()
         }.flowOn(Dispatchers.IO)
+    }
 }

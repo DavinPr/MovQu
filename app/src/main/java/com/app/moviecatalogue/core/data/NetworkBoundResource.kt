@@ -1,7 +1,9 @@
 package com.app.moviecatalogue.core.data
 
 import com.app.moviecatalogue.core.data.remote.network.ApiResponse
+import com.app.moviecatalogue.presentation.utils.EspressoIdlingResource
 import kotlinx.coroutines.flow.*
+import timber.log.Timber
 
 inline fun <DB, REMOTE> networkBoundResource(
     crossinline query: () -> Flow<DB>,
@@ -9,6 +11,7 @@ inline fun <DB, REMOTE> networkBoundResource(
     crossinline saveFetchResult: suspend (REMOTE) -> Unit,
     crossinline shouldFetch: (DB) -> Boolean = { true }
 ) = flow {
+    EspressoIdlingResource.increment()
     val data = query().first()
 
     val flow =
@@ -32,5 +35,8 @@ inline fun <DB, REMOTE> networkBoundResource(
             query().map { Resource.Success(it) }
         }
 
+    EspressoIdlingResource.decrement()
     emitAll(flow)
+}.onCompletion {
+    Timber.d("Complete")
 }
