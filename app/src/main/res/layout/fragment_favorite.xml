@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.ui.home.fragment.favorite.FavoriteFragment">
+    tools:context="com.app.moviecatalogue.ui.home.fragment.favorite.FavoriteFragment">
 
     <TextView
         style="@style/Theme.MovieCatalogue.Text.Semibold20"

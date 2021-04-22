@@ -1,11 +1,7 @@
 package com.app.moviecatalogue
 
 import android.app.Application
-import com.app.moviecatalogue.core.di.databaseModule
-import com.app.moviecatalogue.core.di.networkModule
-import com.app.moviecatalogue.core.di.repositoryModule
-import com.app.moviecatalogue.presentation.di.useCaseModule
-import com.app.moviecatalogue.presentation.di.viewModelModule
+import com.app.moviecatalogue.di.viewModelModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
@@ -25,10 +21,6 @@ class MyApplication : Application() {
         startKoin {
             androidContext(applicationContext)
             modules(
-                networkModule,
-                repositoryModule,
-                databaseModule,
-                useCaseModule,
                 viewModelModule
             )
         }
