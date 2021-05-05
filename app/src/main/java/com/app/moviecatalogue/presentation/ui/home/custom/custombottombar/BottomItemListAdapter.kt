@@ -1,4 +1,4 @@
-package com.app.moviecatalogue.presentation.ui.home.custombottombar
+package com.app.moviecatalogue.presentation.ui.home.custom.custombottombar
 
 import android.os.Handler
 import android.os.Looper

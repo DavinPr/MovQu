@@ -1,4 +1,4 @@
-package com.app.moviecatalogue.presentation.ui.home.custombottombar
+package com.app.moviecatalogue.presentation.ui.home.custom.custombottombar
 
 data class BottomItem(
     val itemId: Int,

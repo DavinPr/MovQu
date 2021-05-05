@@ -1,16 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".presentation.ui.home.fragment.favorite.FavoriteFragment">
 
-    <TextView
-        style="@style/Theme.MovieCatalogue.Text.Semibold20"
-        android:textColor="@color/primaryColor"
-        android:layout_width="wrap_content"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_category"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/implemented_soon" />
+        tools:listitem="@layout/home_category_item"
+        android:orientation="horizontal"
+        app:layoutManager="com.google.android.flexbox.FlexboxLayoutManager"
+        />
 
-</FrameLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_favorite"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="8dp"
+        tools:listitem="@layout/film_item_grid"
+        />
+
+</LinearLayout>

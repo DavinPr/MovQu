@@ -1,13 +1,13 @@
 package com.app.moviecatalogue.core.data
 
+import androidx.lifecycle.LiveData
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
 import androidx.room.withTransaction
 import com.app.moviecatalogue.core.data.local.LocalDataSource
 import com.app.moviecatalogue.core.data.remote.RemoteDataSource
 import com.app.moviecatalogue.core.data.remote.network.ApiResponse
-import com.app.moviecatalogue.core.domain.usecase.model.Movie
-import com.app.moviecatalogue.core.domain.usecase.model.MovieDetail
-import com.app.moviecatalogue.core.domain.usecase.model.TvDetail
-import com.app.moviecatalogue.core.domain.usecase.model.TvShow
+import com.app.moviecatalogue.core.domain.usecase.model.*
 import com.app.moviecatalogue.core.utils.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -17,7 +17,8 @@ import kotlinx.coroutines.flow.map
 
 class AppRepository(
     private val remoteDataSource: RemoteDataSource,
-    private val localDataSource: LocalDataSource
+    private val localDataSource: LocalDataSource,
+    private val appExecutors: AppExecutors
 ) : IAppRepository {
 
     override fun getListMovieDiscover(): Flow<Resource<List<Movie>>> =
@@ -171,5 +172,29 @@ class AppRepository(
                 is ApiResponse.Error -> emit(Resource.Error<TvDetail>(apiResponse.errorMessage))
             }
         }
+
+    override fun getAllFavorite(): LiveData<PagedList<Favorite>> {
+        val data = localDataSource.getAllFavorite().map { it.toDomain() }
+        return LivePagedListBuilder(data, 12).build()
+    }
+
+    override fun getFavoriteByType(type: String): LiveData<PagedList<Favorite>> {
+        val data = localDataSource.getFavoriteByType(type).map { it.toDomain() }
+        return LivePagedListBuilder(data, 12).build()
+    }
+
+    override fun insertFavorite(favorite: Favorite) {
+        appExecutors.diskIO().execute {
+            localDataSource.insertFavorite(favorite.toEntity())
+        }
+    }
+
+    override fun deleteFavorite(favorite: Favorite) {
+        appExecutors.diskIO().execute {
+            localDataSource.deleteFavorite(favorite.toEntity())
+        }
+    }
+
+    override fun isFavorited(id: String): Flow<Boolean> = localDataSource.isFavorited(id)
 
 }

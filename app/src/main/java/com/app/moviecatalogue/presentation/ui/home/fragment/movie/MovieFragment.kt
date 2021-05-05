@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -13,11 +14,15 @@ import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
 import com.app.moviecatalogue.R
+import com.app.moviecatalogue.core.data.Resource
 import com.app.moviecatalogue.core.domain.usecase.model.Movie
 import com.app.moviecatalogue.databinding.FragmentMovieBinding
 import com.app.moviecatalogue.presentation.ui.detail.DetailActivity
 import com.app.moviecatalogue.presentation.ui.home.fragment.adapter.FilmItemCarouselAdapter
 import com.app.moviecatalogue.presentation.ui.home.fragment.adapter.FilmItemHorizontalAdapter
+import com.app.moviecatalogue.presentation.utils.Constants.ID_KEY
+import com.app.moviecatalogue.presentation.utils.Constants.MOVIE_TYPE
+import com.app.moviecatalogue.presentation.utils.Constants.TYPE_KEY
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MovieFragment : Fragment() {
@@ -44,6 +49,8 @@ class MovieFragment : Fragment() {
         val discoverAdapter = FilmItemCarouselAdapter<Movie>()
         viewModel.getDiscover.observe(viewLifecycleOwner) { movies ->
             val data = movies.data
+            binding.discoverLayout.discoverLoading.root.isVisible =
+                movies is Resource.Loading && data.isNullOrEmpty()
             if (data != null && data.isNotEmpty()) {
                 binding.discoverLayout.apply {
                     indicator.visibility = View.VISIBLE
@@ -77,11 +84,11 @@ class MovieFragment : Fragment() {
             binding.discoverLayout.indicator.setViewPager2(this)
 
             binding.discoverLayout.btnNext.setOnClickListener {
-                setCurrentItem(currentItem+1, true)
+                setCurrentItem(currentItem + 1, true)
             }
 
             binding.discoverLayout.btnPrev.setOnClickListener {
-                setCurrentItem(currentItem-1, true)
+                setCurrentItem(currentItem - 1, true)
             }
 
             registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
@@ -122,19 +129,21 @@ class MovieFragment : Fragment() {
 
         discoverAdapter.onClick = {
             val intent = Intent(activity, DetailActivity::class.java)
-            intent.putExtra(DetailActivity.ID_KEY, it.id.toString())
-            intent.putExtra(DetailActivity.TYPE_KEY, 101)
+            intent.putExtra(ID_KEY, it.id.toString())
+            intent.putExtra(TYPE_KEY, MOVIE_TYPE)
             startActivity(intent)
         }
 
         val nowPlayingAdapter = FilmItemHorizontalAdapter<Movie>()
         viewModel.getNowPlaying.observe(viewLifecycleOwner) { movies ->
             val data = movies.data
+            binding.nowPlayingLayout.listFilmLoading.root.apply {
+                isVisible = movies is Resource.Loading && data.isNullOrEmpty()
+            }
             if (data != null) {
                 nowPlayingAdapter.setData(movies.data)
             }
         }
-
 
         binding.nowPlayingLayout.apply {
             viewAll.setOnClickListener { implementedSoon() }
@@ -149,8 +158,8 @@ class MovieFragment : Fragment() {
 
         nowPlayingAdapter.onClick = {
             val intent = Intent(activity, DetailActivity::class.java)
-            intent.putExtra(DetailActivity.ID_KEY, it.id.toString())
-            intent.putExtra(DetailActivity.TYPE_KEY, 101)
+            intent.putExtra(ID_KEY, it.id.toString())
+            intent.putExtra(TYPE_KEY, MOVIE_TYPE)
             startActivity(intent)
         }
 
@@ -158,6 +167,9 @@ class MovieFragment : Fragment() {
         val upcomingAdapter = FilmItemHorizontalAdapter<Movie>()
         viewModel.getUpcoming.observe(viewLifecycleOwner) { movies ->
             val data = movies.data
+            binding.upcomingLayout.listFilmLoading.root.apply {
+                isVisible = movies is Resource.Loading && data.isNullOrEmpty()
+            }
             if (data != null) {
                 upcomingAdapter.setData(movies.data)
             }
@@ -176,8 +188,8 @@ class MovieFragment : Fragment() {
 
         upcomingAdapter.onClick = {
             val intent = Intent(activity, DetailActivity::class.java)
-            intent.putExtra(DetailActivity.ID_KEY, it.id.toString())
-            intent.putExtra(DetailActivity.TYPE_KEY, 101)
+            intent.putExtra(ID_KEY, it.id.toString())
+            intent.putExtra(TYPE_KEY, MOVIE_TYPE)
             startActivity(intent)
         }
     }
@@ -187,7 +199,7 @@ class MovieFragment : Fragment() {
         _binding = null
     }
 
-    private fun implementedSoon(){
+    private fun implementedSoon() {
         Toast.makeText(requireContext(), "Implemented Soon", Toast.LENGTH_SHORT).show()
     }
 }

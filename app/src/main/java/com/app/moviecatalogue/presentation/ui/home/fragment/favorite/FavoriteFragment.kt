@@ -1,60 +1,102 @@
 package com.app.moviecatalogue.presentation.ui.home.fragment.favorite
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.app.moviecatalogue.R
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.GridLayoutManager
+import com.app.moviecatalogue.databinding.FragmentFavoriteBinding
+import com.app.moviecatalogue.presentation.ui.detail.DetailActivity
+import com.app.moviecatalogue.presentation.ui.home.custom.customdecoration.GridSpacesItemDecoration
+import com.app.moviecatalogue.presentation.ui.home.fragment.favorite.category.CategoryListAdapter
+import com.app.moviecatalogue.presentation.utils.Constants
+import com.google.android.flexbox.AlignItems
+import com.google.android.flexbox.FlexWrap
+import com.google.android.flexbox.FlexboxLayoutManager
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import kotlin.math.roundToInt
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [FavoriteFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+@ExperimentalCoroutinesApi
+@FlowPreview
 class FavoriteFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private var _binding: FragmentFavoriteBinding? = null
+    private val binding get() = _binding!!
+    private val viewModel: FavoriteViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_favorite, container, false)
+        _binding = FragmentFavoriteBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment FavoriteFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            FavoriteFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val categoryAdapter = CategoryListAdapter()
+        categoryAdapter.setGenre(viewModel.generateCategoryItem())
+
+        val gridAdapter = FavoriteListAdapter()
+
+        lifecycleScope.launch {
+            viewModel.queryChannel.send("all")
+        }
+
+        binding.rvCategory.apply {
+            adapter = categoryAdapter
+            val flexboxLm = FlexboxLayoutManager(requireContext())
+            flexboxLm.alignItems = AlignItems.STRETCH
+            flexboxLm.flexWrap = FlexWrap.WRAP
+            layoutManager = flexboxLm
+            hasFixedSize()
+        }
+
+        categoryAdapter.onClickItem = {
+            lifecycleScope.launch {
+                viewModel.queryChannel.send(it)
+            }
+        }
+
+        viewModel.getListResult.observe(viewLifecycleOwner) { result ->
+            lifecycleScope.launch {
+                result.observe(viewLifecycleOwner) { favorite ->
+                    gridAdapter.submitList(favorite)
                 }
             }
+        }
+
+        gridAdapter.onClick = {
+            val type = when (it.type) {
+                "movie" -> Constants.MOVIE_TYPE
+                "tv" -> Constants.TV_TYPE
+                else -> 0
+            }
+            val intent = Intent(activity, DetailActivity::class.java)
+            intent.putExtra(Constants.ID_KEY, it.id.toString())
+            intent.putExtra(Constants.TYPE_KEY, type)
+            startActivity(intent)
+        }
+
+        binding.rvFavorite.apply {
+            val spanCount = 3
+            val spacing = (4 * resources.displayMetrics.density).roundToInt()
+
+            layoutManager = GridLayoutManager(requireContext(), 3)
+            hasFixedSize()
+            adapter = gridAdapter
+            addItemDecoration(GridSpacesItemDecoration(spanCount, spacing, true))
+        }
+
     }
+
 }

@@ -3,6 +3,7 @@ package com.app.moviecatalogue.core.data.local.room
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.app.moviecatalogue.core.data.local.entity.*
+import com.app.moviecatalogue.core.data.local.entity.favorite.FavoriteEntity
 
 @Database(
     entities = [
@@ -11,7 +12,8 @@ import com.app.moviecatalogue.core.data.local.entity.*
         UpcomingMovieEntity::class,
         DiscoverTvShowEntity::class,
         AiringTodayTvShowEntity::class,
-        OnTheAirTvShowEntity::class
+        OnTheAirTvShowEntity::class,
+        FavoriteEntity::class
     ],
     version = 1,
     exportSchema = false

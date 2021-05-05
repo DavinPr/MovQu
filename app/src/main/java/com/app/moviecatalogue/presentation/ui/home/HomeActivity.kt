@@ -7,8 +7,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.moviecatalogue.R
 import com.app.moviecatalogue.databinding.ActivityHomeBinding
-import com.app.moviecatalogue.presentation.ui.home.custombottombar.BottomItem
-import com.app.moviecatalogue.presentation.ui.home.custombottombar.BottomItemListAdapter
+import com.app.moviecatalogue.presentation.ui.home.custom.custombottombar.BottomItem
+import com.app.moviecatalogue.presentation.ui.home.custom.custombottombar.BottomItemListAdapter
 import com.app.moviecatalogue.presentation.ui.home.fragment.favorite.FavoriteFragment
 import com.app.moviecatalogue.presentation.ui.home.fragment.movie.MovieFragment
 import com.app.moviecatalogue.presentation.ui.search.SearchFragment

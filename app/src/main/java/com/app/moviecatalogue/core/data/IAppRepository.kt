@@ -1,9 +1,8 @@
 package com.app.moviecatalogue.core.data
 
-import com.app.moviecatalogue.core.domain.usecase.model.Movie
-import com.app.moviecatalogue.core.domain.usecase.model.MovieDetail
-import com.app.moviecatalogue.core.domain.usecase.model.TvDetail
-import com.app.moviecatalogue.core.domain.usecase.model.TvShow
+import androidx.lifecycle.LiveData
+import androidx.paging.PagedList
+import com.app.moviecatalogue.core.domain.usecase.model.*
 import kotlinx.coroutines.flow.Flow
 
 interface IAppRepository {
@@ -22,4 +21,14 @@ interface IAppRepository {
     fun getDetailMovie(id: String): Flow<Resource<MovieDetail>>
 
     fun getDetailTv(id: String): Flow<Resource<TvDetail>>
+
+    fun getAllFavorite(): LiveData<PagedList<Favorite>>
+
+    fun getFavoriteByType(type: String): LiveData<PagedList<Favorite>>
+
+    fun insertFavorite(favorite: Favorite)
+
+    fun deleteFavorite(favorite: Favorite)
+
+    fun isFavorited(id: String): Flow<Boolean>
 }

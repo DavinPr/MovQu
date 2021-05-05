@@ -1,6 +1,8 @@
 package com.app.moviecatalogue.core.data.local
 
+import androidx.paging.DataSource
 import com.app.moviecatalogue.core.data.local.entity.*
+import com.app.moviecatalogue.core.data.local.entity.favorite.FavoriteEntity
 import com.app.moviecatalogue.core.data.local.room.FilmDatabase
 import kotlinx.coroutines.flow.Flow
 
@@ -69,5 +71,19 @@ class LocalDataSource(val filmDatabase: FilmDatabase) {
         filmDao.insertListTvShowOnTheAir(listOnTheAirTvShowEntity)
 
     suspend fun deleteAllTvShowOnTheAir() = filmDao.deleteAllTvShowOnTheAir()
+
+    /**
+     * Favorite Source
+     */
+    fun getAllFavorite(): DataSource.Factory<Int, FavoriteEntity> = filmDao.getAllFavorite()
+
+    fun getFavoriteByType(type: String): DataSource.Factory<Int, FavoriteEntity> =
+        filmDao.getFavoriteByType(type)
+
+    fun insertFavorite(favorite: FavoriteEntity) = filmDao.insertFavorite(favorite)
+
+    fun deleteFavorite(favorite: FavoriteEntity) = filmDao.deleteFavorite(favorite)
+
+    fun isFavorited(id: String): Flow<Boolean> = filmDao.isFavorited(id)
 
 }

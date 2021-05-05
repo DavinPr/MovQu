@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -13,11 +14,15 @@ import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
 import com.app.moviecatalogue.R
+import com.app.moviecatalogue.core.data.Resource
 import com.app.moviecatalogue.core.domain.usecase.model.TvShow
 import com.app.moviecatalogue.databinding.FragmentTvShowBinding
 import com.app.moviecatalogue.presentation.ui.detail.DetailActivity
 import com.app.moviecatalogue.presentation.ui.home.fragment.adapter.FilmItemCarouselAdapter
 import com.app.moviecatalogue.presentation.ui.home.fragment.adapter.FilmItemHorizontalAdapter
+import com.app.moviecatalogue.presentation.utils.Constants.ID_KEY
+import com.app.moviecatalogue.presentation.utils.Constants.TV_TYPE
+import com.app.moviecatalogue.presentation.utils.Constants.TYPE_KEY
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class TvShowFragment : Fragment() {
@@ -42,6 +47,9 @@ class TvShowFragment : Fragment() {
         val discoverAdapter = FilmItemCarouselAdapter<TvShow>()
         viewModel.getTvDiscover.observe(viewLifecycleOwner) { tv ->
             val data = tv.data
+            binding.discoverLayout.discoverLoading.root.apply {
+                isVisible = tv is Resource.Loading && data.isNullOrEmpty()
+            }
             if (data != null && data.isNotEmpty()) {
                 binding.discoverLayout.apply {
                     indicator.visibility = View.VISIBLE
@@ -117,14 +125,17 @@ class TvShowFragment : Fragment() {
 
         discoverAdapter.onClick = {
             val intent = Intent(activity, DetailActivity::class.java)
-            intent.putExtra(DetailActivity.ID_KEY, it.id.toString())
-            intent.putExtra(DetailActivity.TYPE_KEY, 102)
+            intent.putExtra(ID_KEY, it.id.toString())
+            intent.putExtra(TYPE_KEY, TV_TYPE)
             startActivity(intent)
         }
 
         val airingTodayAdapter = FilmItemHorizontalAdapter<TvShow>()
         viewModel.getTvAiringToday.observe(viewLifecycleOwner) { tv ->
             val data = tv.data
+            binding.airingTodayLayout.listFilmLoading.root.apply {
+                isVisible = tv is Resource.Loading && data.isNullOrEmpty()
+            }
             if (data != null) {
                 airingTodayAdapter.setData(tv.data)
             }
@@ -144,8 +155,8 @@ class TvShowFragment : Fragment() {
 
         airingTodayAdapter.onClick = {
             val intent = Intent(activity, DetailActivity::class.java)
-            intent.putExtra(DetailActivity.ID_KEY, it.id.toString())
-            intent.putExtra(DetailActivity.TYPE_KEY, 102)
+            intent.putExtra(ID_KEY, it.id.toString())
+            intent.putExtra(TYPE_KEY, TV_TYPE)
             startActivity(intent)
         }
 
@@ -153,6 +164,9 @@ class TvShowFragment : Fragment() {
         val onTheAirAdapter = FilmItemHorizontalAdapter<TvShow>()
         viewModel.getTvOnTheAir.observe(viewLifecycleOwner) { tv ->
             val data = tv.data
+            binding.airingTodayLayout.listFilmLoading.root.apply {
+                isVisible = tv is Resource.Loading && data.isNullOrEmpty()
+            }
             if (data != null) {
                 onTheAirAdapter.setData(tv.data)
             }
@@ -171,8 +185,8 @@ class TvShowFragment : Fragment() {
 
         onTheAirAdapter.onClick = {
             val intent = Intent(activity, DetailActivity::class.java)
-            intent.putExtra(DetailActivity.ID_KEY, it.id.toString())
-            intent.putExtra(DetailActivity.TYPE_KEY, 102)
+            intent.putExtra(ID_KEY, it.id.toString())
+            intent.putExtra(TYPE_KEY, TV_TYPE)
             startActivity(intent)
         }
     }

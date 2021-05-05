@@ -1,6 +1,7 @@
 package com.app.moviecatalogue.core.utils
 
 import com.app.moviecatalogue.core.data.local.entity.*
+import com.app.moviecatalogue.core.data.local.entity.favorite.FavoriteEntity
 import com.app.moviecatalogue.core.data.remote.response.MovieDetailResponse
 import com.app.moviecatalogue.core.data.remote.response.MoviesItem
 import com.app.moviecatalogue.core.data.remote.response.TvDetailResponse
@@ -267,6 +268,50 @@ fun <T> List<T>.toTvShowDomain(): List<TvShow> {
         }
     }
     return listTvShow
+}
+
+fun FavoriteEntity.toDomain(): Favorite {
+    return this.let {
+        Favorite(
+            it.title,
+            it.posterPath,
+            it.type,
+            it.id
+        )
+    }
+}
+
+fun Favorite.toEntity(): FavoriteEntity {
+    return this.let {
+        FavoriteEntity(
+            it.title,
+            it.posterPath,
+            it.type,
+            it.id
+        )
+    }
+}
+
+fun MovieDetail.toFavorite(): Favorite {
+    return this.let {
+        Favorite(
+            it.title,
+            it.poster_path,
+            "movie",
+            it.id
+        )
+    }
+}
+
+fun TvDetail.toFavorite(): Favorite {
+    return this.let {
+        Favorite(
+            it.name,
+            it.posterPath,
+            "tv",
+            it.id
+        )
+    }
 }
 
 

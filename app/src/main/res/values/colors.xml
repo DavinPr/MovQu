@@ -14,6 +14,8 @@
 <!--    <color name="secondaryLightColor">#ffb04c</color>-->
     <color name="secondaryDarkColor">#bc5100</color>
 
+    <color name="red">#BC0000</color>
+
     <color name="light_gray">#E6E6E6</color>
     <color name="dark_gray">#3E3E3E</color>
 </resources>

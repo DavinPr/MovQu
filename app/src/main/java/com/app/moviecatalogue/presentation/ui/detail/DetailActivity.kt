@@ -2,8 +2,8 @@ package com.app.moviecatalogue.presentation.ui.detail
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.app.moviecatalogue.R
 import com.app.moviecatalogue.core.data.Resource
 import com.app.moviecatalogue.core.domain.usecase.model.MovieDetail
@@ -12,6 +12,10 @@ import com.app.moviecatalogue.core.domain.usecase.model.TvDetail
 import com.app.moviecatalogue.core.domain.usecase.model.TvGenre
 import com.app.moviecatalogue.databinding.ActivityDetailBinding
 import com.app.moviecatalogue.presentation.ui.detail.adapter.GenreListAdapter
+import com.app.moviecatalogue.presentation.utils.Constants.ID_KEY
+import com.app.moviecatalogue.presentation.utils.Constants.MOVIE_TYPE
+import com.app.moviecatalogue.presentation.utils.Constants.TV_TYPE
+import com.app.moviecatalogue.presentation.utils.Constants.TYPE_KEY
 import com.app.moviecatalogue.presentation.utils.dateFormat
 import com.app.moviecatalogue.presentation.utils.runtimeFormat
 import com.app.moviecatalogue.presentation.utils.toImageurl
@@ -20,15 +24,11 @@ import com.bumptech.glide.Glide
 import com.google.android.flexbox.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class DetailActivity : AppCompatActivity(), View.OnClickListener {
+class DetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDetailBinding
     private val viewModel: DetailViewModel by viewModel()
-
-    companion object {
-        const val ID_KEY = "id_key"
-        const val TYPE_KEY = "type_key"
-    }
+    private var isFavorite = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,23 +37,25 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
 
         val type = intent.getIntExtra(TYPE_KEY, 101)
         val id = intent.getStringExtra(ID_KEY)
+        if (id != null) {
+            viewModel.checkFavorite(id).observe(this) {
+                isFavorite = it
+                setFavorite(it)
+            }
+        }
         when (type) {
-            101 -> {
+            MOVIE_TYPE -> {
                 binding.detailMovieAttribute.apply {
                     root.visibility = View.VISIBLE
                 }
                 if (id != null) setDetailMovieView(id)
             }
-            102 -> {
+            TV_TYPE -> {
                 binding.detailTvAttribute.apply {
                     root.visibility = View.VISIBLE
                 }
                 if (id != null) setDetailTvView(id)
             }
-        }
-        binding.toolbar.apply {
-            btnBack.setOnClickListener(this@DetailActivity)
-            btnFavorite.setOnClickListener(this@DetailActivity)
         }
     }
 
@@ -67,6 +69,14 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
                     val data = detail.data
                     if (data != null) {
                         setDataMovie(data)
+                        binding.toolbar.btnFavorite.setOnClickListener {
+                            setFavorite(!isFavorite)
+                            if (isFavorite) {
+                                viewModel.deleteFavoriteFromMovie(data)
+                                return@setOnClickListener
+                            }
+                            viewModel.insertFavoriteFromMovie(data)
+                        }
                     }
                 }
                 is Resource.Error -> {
@@ -85,6 +95,14 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
                     val data = detail.data
                     if (data != null) {
                         setDataTv(data)
+                        binding.toolbar.btnFavorite.setOnClickListener {
+                            setFavorite(!isFavorite)
+                            if (isFavorite) {
+                                viewModel.deleteFavoriteFromTv(data)
+                                return@setOnClickListener
+                            }
+                            viewModel.insertFavoriteFromTv(data)
+                        }
                     }
                 }
                 is Resource.Error -> {
@@ -151,14 +169,22 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    override fun onClick(v: View?) {
-        when (v?.id) {
-            binding.toolbar.btnBack.id -> finish()
-            binding.toolbar.btnFavorite.id -> {
-                Toast.makeText(this, "Implemented soon", Toast.LENGTH_SHORT).show()
+    private fun setFavorite(state: Boolean) {
+        if (state) {
+            binding.toolbar.btnFavorite.apply {
+                Glide.with(this@DetailActivity)
+                    .load(R.drawable.ic_love_filled)
+                    .into(this)
+                imageTintList = ContextCompat.getColorStateList(this@DetailActivity, R.color.red)
+            }
+
+        } else {
+            binding.toolbar.btnFavorite.apply {
+                Glide.with(this@DetailActivity)
+                    .load(R.drawable.ic_love_border)
+                    .into(this)
+                imageTintList = ContextCompat.getColorStateList(this@DetailActivity, R.color.black)
             }
         }
     }
-
-
 }

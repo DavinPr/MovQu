@@ -3,10 +3,12 @@ package com.app.moviecatalogue.core.di
 import androidx.room.Room
 import com.app.moviecatalogue.BuildConfig
 import com.app.moviecatalogue.core.data.AppRepository
+import com.app.moviecatalogue.core.data.IAppRepository
 import com.app.moviecatalogue.core.data.local.LocalDataSource
 import com.app.moviecatalogue.core.data.local.room.FilmDatabase
 import com.app.moviecatalogue.core.data.remote.RemoteDataSource
 import com.app.moviecatalogue.core.data.remote.network.ApiService
+import com.app.moviecatalogue.core.utils.AppExecutors
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidContext
@@ -45,7 +47,9 @@ val databaseModule = module {
 }
 
 val repositoryModule = module {
+    factory { AppExecutors() }
+
     single { LocalDataSource(get()) }
     single { RemoteDataSource(get()) }
-    single { AppRepository(get(), get()) }
+    single<IAppRepository> { AppRepository(get(), get(), get()) }
 }

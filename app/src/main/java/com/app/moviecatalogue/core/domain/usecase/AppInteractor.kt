@@ -1,14 +1,14 @@
 package com.app.moviecatalogue.core.domain.usecase
 
-import com.app.moviecatalogue.core.data.AppRepository
+import androidx.lifecycle.LiveData
+import androidx.paging.PagedList
+import com.app.moviecatalogue.core.data.IAppRepository
 import com.app.moviecatalogue.core.data.Resource
-import com.app.moviecatalogue.core.domain.usecase.model.Movie
-import com.app.moviecatalogue.core.domain.usecase.model.MovieDetail
-import com.app.moviecatalogue.core.domain.usecase.model.TvDetail
-import com.app.moviecatalogue.core.domain.usecase.model.TvShow
+import com.app.moviecatalogue.core.domain.usecase.model.*
+import com.app.moviecatalogue.core.utils.toFavorite
 import kotlinx.coroutines.flow.Flow
 
-class AppInteractor(private val appRepository: AppRepository) : AppUseCase {
+class AppInteractor(private val appRepository: IAppRepository) : AppUseCase {
     override fun getListMovieDiscover(): Flow<Resource<List<Movie>>> =
         appRepository.getListMovieDiscover()
 
@@ -31,4 +31,31 @@ class AppInteractor(private val appRepository: AppRepository) : AppUseCase {
         appRepository.getDetailMovie(id)
 
     override fun getDetailTv(id: String): Flow<Resource<TvDetail>> = appRepository.getDetailTv(id)
+
+    override fun getAllFavorite(): LiveData<PagedList<Favorite>> = appRepository.getAllFavorite()
+
+    override fun getFavoriteByType(type: String): LiveData<PagedList<Favorite>> =
+        appRepository.getFavoriteByType(type)
+
+    override fun insertFavoriteFromMovie(detail: MovieDetail) {
+        val favorite = detail.toFavorite()
+        appRepository.insertFavorite(favorite)
+    }
+
+    override fun insertFavoriteFromTv(detail: TvDetail) {
+        val favorite = detail.toFavorite()
+        appRepository.insertFavorite(favorite)
+    }
+
+    override fun deleteFavoriteFromMovie(detail: MovieDetail) {
+        val favorite = detail.toFavorite()
+        appRepository.deleteFavorite(favorite)
+    }
+
+    override fun deleteFavoriteFromTv(detail: TvDetail) {
+        val favorite = detail.toFavorite()
+        appRepository.deleteFavorite(favorite)
+    }
+
+    override fun isFavorited(id: String): Flow<Boolean> = appRepository.isFavorited(id)
 }

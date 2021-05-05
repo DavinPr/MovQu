@@ -1,10 +1,9 @@
 package com.app.moviecatalogue.core.data.local.room
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.paging.DataSource
+import androidx.room.*
 import com.app.moviecatalogue.core.data.local.entity.*
+import com.app.moviecatalogue.core.data.local.entity.favorite.FavoriteEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -88,5 +87,24 @@ interface FilmDao {
 
     @Query("DELETE FROM on_the_air_tv_show")
     suspend fun deleteAllTvShowOnTheAir()
+
+    /**
+     * Query for Movie Favorite
+     */
+    @Query("SELECT * FROM favorite")
+    fun getAllFavorite(): DataSource.Factory<Int, FavoriteEntity>
+
+    @Query("SELECT * FROM favorite WHERE type = :type")
+    fun getFavoriteByType(type: String): DataSource.Factory<Int, FavoriteEntity>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertFavorite(favorite: FavoriteEntity)
+
+    @Delete
+    fun deleteFavorite(favorite: FavoriteEntity)
+
+    @Query("SELECT EXISTS(SELECT * FROM favorite WHERE id = :id)")
+    fun isFavorited(id: String): Flow<Boolean>
+
 
 }
