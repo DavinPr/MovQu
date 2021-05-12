@@ -13,16 +13,21 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
+import com.app.moviecatalogue.Constants.ID_KEY
+import com.app.moviecatalogue.Constants.LIST_TYPE
+import com.app.moviecatalogue.Constants.MOVIE_DISCOVER_TYPE
+import com.app.moviecatalogue.Constants.MOVIE_NOW_PLAYING_TYPE
+import com.app.moviecatalogue.Constants.MOVIE_TYPE
+import com.app.moviecatalogue.Constants.MOVIE_UPCOMING_TYPE
+import com.app.moviecatalogue.Constants.TYPE_KEY
 import com.app.moviecatalogue.R
 import com.app.moviecatalogue.core.data.Resource
 import com.app.moviecatalogue.core.domain.usecase.model.Movie
 import com.app.moviecatalogue.databinding.FragmentMovieBinding
+import com.app.moviecatalogue.presentation.ui.allfilm.AllFilmActivity
 import com.app.moviecatalogue.presentation.ui.detail.DetailActivity
 import com.app.moviecatalogue.presentation.ui.home.fragment.adapter.FilmItemCarouselAdapter
 import com.app.moviecatalogue.presentation.ui.home.fragment.adapter.FilmItemHorizontalAdapter
-import com.app.moviecatalogue.presentation.utils.Constants.ID_KEY
-import com.app.moviecatalogue.presentation.utils.Constants.MOVIE_TYPE
-import com.app.moviecatalogue.presentation.utils.Constants.TYPE_KEY
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MovieFragment : Fragment() {
@@ -70,8 +75,12 @@ class MovieFragment : Fragment() {
         }
 
         binding.discoverLayout.viewAll.setOnClickListener {
-            implementedSoon()
+            val intent = Intent(activity, AllFilmActivity::class.java)
+            intent.putExtra(TYPE_KEY, MOVIE_TYPE)
+            intent.putExtra(LIST_TYPE, MOVIE_DISCOVER_TYPE)
+            startActivity(intent)
         }
+
         binding.discoverLayout.viewpagerFilm.apply {
             adapter = discoverAdapter
             clipToPadding = false
@@ -146,7 +155,12 @@ class MovieFragment : Fragment() {
         }
 
         binding.nowPlayingLayout.apply {
-            viewAll.setOnClickListener { implementedSoon() }
+            viewAll.setOnClickListener {
+                val intent = Intent(activity, AllFilmActivity::class.java)
+                intent.putExtra(TYPE_KEY, MOVIE_TYPE)
+                intent.putExtra(LIST_TYPE, MOVIE_NOW_PLAYING_TYPE)
+                startActivity(intent)
+            }
             tvTitleCategory.text = resources.getString(R.string.now_playing)
             rvFilm.also {
                 it.adapter = nowPlayingAdapter
@@ -176,7 +190,12 @@ class MovieFragment : Fragment() {
         }
 
         binding.upcomingLayout.apply {
-            viewAll.setOnClickListener { implementedSoon() }
+            viewAll.setOnClickListener {
+                val intent = Intent(activity, AllFilmActivity::class.java)
+                intent.putExtra(TYPE_KEY, MOVIE_TYPE)
+                intent.putExtra(LIST_TYPE, MOVIE_UPCOMING_TYPE)
+                startActivity(intent)
+            }
             tvTitleCategory.text = resources.getString(R.string.upcoming)
             rvFilm.also {
                 it.layoutManager =

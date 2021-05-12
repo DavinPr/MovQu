@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import com.app.moviecatalogue.R
 import com.app.moviecatalogue.core.data.Resource
 import com.app.moviecatalogue.core.domain.usecase.model.MovieDetail
@@ -12,10 +13,10 @@ import com.app.moviecatalogue.core.domain.usecase.model.TvDetail
 import com.app.moviecatalogue.core.domain.usecase.model.TvGenre
 import com.app.moviecatalogue.databinding.ActivityDetailBinding
 import com.app.moviecatalogue.presentation.ui.detail.adapter.GenreListAdapter
-import com.app.moviecatalogue.presentation.utils.Constants.ID_KEY
-import com.app.moviecatalogue.presentation.utils.Constants.MOVIE_TYPE
-import com.app.moviecatalogue.presentation.utils.Constants.TV_TYPE
-import com.app.moviecatalogue.presentation.utils.Constants.TYPE_KEY
+import com.app.moviecatalogue.Constants.ID_KEY
+import com.app.moviecatalogue.Constants.MOVIE_TYPE
+import com.app.moviecatalogue.Constants.TV_TYPE
+import com.app.moviecatalogue.Constants.TYPE_KEY
 import com.app.moviecatalogue.presentation.utils.dateFormat
 import com.app.moviecatalogue.presentation.utils.runtimeFormat
 import com.app.moviecatalogue.presentation.utils.toImageurl
@@ -64,8 +65,10 @@ class DetailActivity : AppCompatActivity() {
         viewModel.getDetailMovie(id).observe(this) { detail ->
             when (detail) {
                 is Resource.Loading -> {
+                    showLoading(true)
                 }
                 is Resource.Success -> {
+                    showLoading(false)
                     val data = detail.data
                     if (data != null) {
                         setDataMovie(data)
@@ -80,6 +83,7 @@ class DetailActivity : AppCompatActivity() {
                     }
                 }
                 is Resource.Error -> {
+                    showLoading(false)
                 }
             }
         }
@@ -90,8 +94,10 @@ class DetailActivity : AppCompatActivity() {
         viewModel.getDetailTv(id).observe(this) { detail ->
             when (detail) {
                 is Resource.Loading -> {
+                    showLoading(true)
                 }
                 is Resource.Success -> {
+                    showLoading(false)
                     val data = detail.data
                     if (data != null) {
                         setDataTv(data)
@@ -106,6 +112,7 @@ class DetailActivity : AppCompatActivity() {
                     }
                 }
                 is Resource.Error -> {
+                    showLoading(false)
                 }
             }
         }
@@ -186,5 +193,9 @@ class DetailActivity : AppCompatActivity() {
                 imageTintList = ContextCompat.getColorStateList(this@DetailActivity, R.color.black)
             }
         }
+    }
+
+    private fun showLoading(state: Boolean) {
+        binding.detailLoading.progressBar.isVisible = state
     }
 }

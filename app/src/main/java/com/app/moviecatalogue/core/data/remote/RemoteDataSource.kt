@@ -1,16 +1,33 @@
 package com.app.moviecatalogue.core.data.remote
 
+import androidx.paging.DataSource
 import com.app.moviecatalogue.core.data.remote.network.ApiResponse
 import com.app.moviecatalogue.core.data.remote.network.ApiService
-import com.app.moviecatalogue.core.data.remote.response.MovieDetailResponse
-import com.app.moviecatalogue.core.data.remote.response.MoviesItem
-import com.app.moviecatalogue.core.data.remote.response.TvDetailResponse
-import com.app.moviecatalogue.core.data.remote.response.TvShowItem
+import com.app.moviecatalogue.core.data.remote.paging.MovieDataSource
+import com.app.moviecatalogue.core.data.remote.paging.TvDataSource
+import com.app.moviecatalogue.core.data.remote.response.*
 import com.app.moviecatalogue.presentation.utils.EspressoIdlingResource
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 
-class RemoteDataSource(private val apiService: ApiService) {
+class RemoteDataSource(
+    private val apiService: ApiService,
+    private val coroutineScope: CoroutineScope
+) {
+
+    fun getAllListDiscoverMovie(): DataSource.Factory<Int, MoviesItem> =
+        object : DataSource.Factory<Int, MoviesItem>() {
+            override fun create(): DataSource<Int, MoviesItem> {
+                return object : MovieDataSource(coroutineScope) {
+                    override val fetch: suspend (Int) -> MovieResponse
+                        get() = { page ->
+                            apiService.getListMovieDiscover(page = page)
+                        }
+                }
+            }
+        }
+
 
     fun getListDiscoverMovie(): Flow<ApiResponse<List<MoviesItem>>> {
         return flow {
@@ -30,6 +47,18 @@ class RemoteDataSource(private val apiService: ApiService) {
         }.flowOn(Dispatchers.IO)
     }
 
+    fun getAllListNowPlayingMovie(): DataSource.Factory<Int, MoviesItem> =
+        object : DataSource.Factory<Int, MoviesItem>() {
+            override fun create(): DataSource<Int, MoviesItem> {
+                return object : MovieDataSource(coroutineScope) {
+                    override val fetch: suspend (Int) -> MovieResponse
+                        get() = { page ->
+                            apiService.getListMovieNowPlaying(page = page)
+                        }
+                }
+            }
+        }
+
     fun getListMovieNowPlaying(): Flow<ApiResponse<List<MoviesItem>>> {
         return flow {
             EspressoIdlingResource.increment()
@@ -47,6 +76,18 @@ class RemoteDataSource(private val apiService: ApiService) {
             EspressoIdlingResource.decrement()
         }.flowOn(Dispatchers.IO)
     }
+
+    fun getAllListUpcomingMovie(): DataSource.Factory<Int, MoviesItem> =
+        object : DataSource.Factory<Int, MoviesItem>() {
+            override fun create(): DataSource<Int, MoviesItem> {
+                return object : MovieDataSource(coroutineScope) {
+                    override val fetch: suspend (Int) -> MovieResponse
+                        get() = { page ->
+                            apiService.getListMovieUpcoming(page = page)
+                        }
+                }
+            }
+        }
 
     fun getListMovieUpcoming(): Flow<ApiResponse<List<MoviesItem>>> {
         return flow {
@@ -66,6 +107,18 @@ class RemoteDataSource(private val apiService: ApiService) {
         }.flowOn(Dispatchers.IO)
     }
 
+    fun getAllListDiscoverTv(): DataSource.Factory<Int, TvShowItem> =
+        object : DataSource.Factory<Int, TvShowItem>() {
+            override fun create(): DataSource<Int, TvShowItem> {
+                return object : TvDataSource(coroutineScope) {
+                    override val fetch: suspend (Int) -> TvShowResponse
+                        get() = { page ->
+                            apiService.getListTvDiscover(page = page)
+                        }
+                }
+            }
+        }
+
     fun getListTvDiscover(): Flow<ApiResponse<List<TvShowItem>>> {
         return flow {
             EspressoIdlingResource.increment()
@@ -84,6 +137,18 @@ class RemoteDataSource(private val apiService: ApiService) {
         }.flowOn(Dispatchers.IO)
     }
 
+    fun getAllListAiringTodayTv(): DataSource.Factory<Int, TvShowItem> =
+        object : DataSource.Factory<Int, TvShowItem>() {
+            override fun create(): DataSource<Int, TvShowItem> {
+                return object : TvDataSource(coroutineScope) {
+                    override val fetch: suspend (Int) -> TvShowResponse
+                        get() = { page ->
+                            apiService.getListTvAiringToday(page = page)
+                        }
+                }
+            }
+        }
+
     fun getListTvAiringToday(): Flow<ApiResponse<List<TvShowItem>>> {
         return flow {
             EspressoIdlingResource.increment()
@@ -101,6 +166,18 @@ class RemoteDataSource(private val apiService: ApiService) {
             EspressoIdlingResource.decrement()
         }.flowOn(Dispatchers.IO)
     }
+
+    fun getAllListOnTheAirTv(): DataSource.Factory<Int, TvShowItem> =
+        object : DataSource.Factory<Int, TvShowItem>() {
+            override fun create(): DataSource<Int, TvShowItem> {
+                return object : TvDataSource(coroutineScope) {
+                    override val fetch: suspend (Int) -> TvShowResponse
+                        get() = { page ->
+                            apiService.getListTvOnTheAir(page = page)
+                        }
+                }
+            }
+        }
 
     fun getListTvOnTheAir(): Flow<ApiResponse<List<TvShowItem>>> {
         return flow {
@@ -129,10 +206,10 @@ class RemoteDataSource(private val apiService: ApiService) {
             } else {
                 emit(ApiResponse.Empty)
             }
-        }.catch { e ->
-            emit(ApiResponse.Error(e.toString()))
         }.onCompletion {
             EspressoIdlingResource.decrement()
+        }.catch { e ->
+            emit(ApiResponse.Error(e.toString()))
         }.flowOn(Dispatchers.IO)
     }
 

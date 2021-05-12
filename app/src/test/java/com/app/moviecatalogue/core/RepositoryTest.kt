@@ -1,65 +1,72 @@
 package com.app.moviecatalogue.core
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.paging.DataSource
 import com.app.moviecatalogue.core.data.Resource
 import com.app.moviecatalogue.core.data.local.LocalDataSource
 import com.app.moviecatalogue.core.data.local.entity.*
+import com.app.moviecatalogue.core.data.local.entity.favorite.FavoriteEntity
 import com.app.moviecatalogue.core.data.remote.RemoteDataSource
-import com.app.moviecatalogue.core.data.remote.network.ApiService
+import com.app.moviecatalogue.core.data.remote.network.ApiResponse
+import com.app.moviecatalogue.core.data.remote.response.MoviesItem
+import com.app.moviecatalogue.core.data.remote.response.TvShowItem
+import com.app.moviecatalogue.core.utils.AppExecutors
+import com.app.moviecatalogue.core.utils.toEntity
 import com.app.moviecatalogue.presentation.utils.DataDummy
+import com.app.moviecatalogue.utils.PagedListUtil
+import com.nhaarman.mockitokotlin2.doNothing
+import com.nhaarman.mockitokotlin2.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.test.runBlockingTest
-import okhttp3.OkHttpClient
-import okhttp3.mockwebserver.MockWebServer
-import org.junit.After
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNotNull
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mockito.`when`
-import org.mockito.Mockito.mock
+import org.mockito.Mock
+import org.mockito.Mockito.*
 import org.mockito.junit.MockitoJUnitRunner
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import java.util.concurrent.TimeUnit
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
 class RepositoryTest {
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
-    private val mockWebServer = MockWebServer()
+
     private lateinit var repository: FakeRepository
+
+    @Mock
     private lateinit var local: LocalDataSource
+
+    @Mock
     private lateinit var remote: RemoteDataSource
+    private lateinit var appExecutors: AppExecutors
 
     @Before
     fun setup() {
-        //remote
-        val client = OkHttpClient.Builder()
-            .connectTimeout(1, TimeUnit.SECONDS)
-            .readTimeout(1, TimeUnit.SECONDS)
-            .writeTimeout(1, TimeUnit.SECONDS)
-            .build()
+        appExecutors = AppExecutors()
+        repository = FakeRepository(appExecutors, remote, local)
+    }
 
-        val api = Retrofit.Builder()
-            .baseUrl(mockWebServer.url("https://api.themoviedb.org/3/"))
-            .client(client)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(ApiService::class.java)
-        remote = RemoteDataSource(api)
 
-        //local
-        local = mock(LocalDataSource::class.java)
+    @Test
+    fun testGetAllListMovie() {
 
-        repository = FakeRepository(remote, local)
+        runBlockingTest {
+            val dataSourceFactory =
+                mock(DataSource.Factory::class.java) as DataSource.Factory<Int, MoviesItem>
+            `when`(remote.getAllListDiscoverMovie()).thenReturn(dataSourceFactory)
+            repository.getAllListMovieDiscover()
+
+            val discover =
+                Resource.Success(PagedListUtil.mockPagedList(DataDummy.generateDummyMovie()))
+            assertNotNull(discover.data)
+            assertEquals(
+                discover.data?.size?.toLong(),
+                DataDummy.generateDummyMovie().size.toLong()
+            )
+        }
     }
 
     @Test
@@ -104,6 +111,22 @@ class RepositoryTest {
             val data = repository.getListMovieUpcoming().first().data
             assertNotNull(data)
             assertEquals(DataDummy.generateEntityDummyUpcomingMovie().size, data?.size)
+        }
+    }
+
+    @Test
+    fun testGetAllListTv() {
+
+        runBlockingTest {
+            val dataSourceFactory =
+                mock(DataSource.Factory::class.java) as DataSource.Factory<Int, TvShowItem>
+            `when`(remote.getAllListDiscoverTv()).thenReturn(dataSourceFactory)
+            repository.getAllListTvDiscover()
+
+            val discover =
+                Resource.Success(PagedListUtil.mockPagedList(DataDummy.generateDummyTv()))
+            assertNotNull(discover.data)
+            assertEquals(discover.data?.size?.toLong(), DataDummy.generateDummyTv().size.toLong())
         }
     }
 
@@ -154,47 +177,73 @@ class RepositoryTest {
 
     @Test
     fun getDetailMovie() {
-        runBlocking {
-            when (val detail = repository.getDetailMovie(399566.toString()).first()) {
-                is Resource.Success -> {
-                    assertNotNull(detail.data)
-                    assertEquals(399566, detail.data?.id)
-                    assertEquals("Godzilla vs. Kong", detail.data?.title)
-                }
-                is Resource.Error -> {
-                    println("Test Failed")
-                }
+        val detailResponseDummy = DataDummy.generateDummyDetailMovieResponse()
+        val detailResponse = MutableStateFlow(detailResponseDummy)
+        runBlockingTest {
+            `when`(remote.getDetailMovie(detailResponseDummy.id.toString())).thenReturn(
+                detailResponse.map {
+                    ApiResponse.Success(
+                        it
+                    )
+                })
+            repository.getDetailMovie(detailResponseDummy.id.toString()).collect {
+                assertNotNull(it.data)
+                assertEquals(detailResponseDummy.id, it.data?.id)
             }
+            verify(remote, times(1)).getDetailMovie(detailResponseDummy.id.toString())
+        }
+    }
+
+
+    @Test
+    fun getDetailTv() {
+        val detailResponseDummy = DataDummy.generateDummyDetailTvResponse()
+        val detailResponse = MutableStateFlow(detailResponseDummy)
+        runBlockingTest {
+            `when`(remote.getDetailTv(detailResponseDummy.id.toString())).thenReturn(detailResponse.map {
+                ApiResponse.Success(
+                    it
+                )
+            })
+            repository.getDetailTv(detailResponseDummy.id.toString()).collect {
+                assertNotNull(it.data)
+                assertEquals(detailResponseDummy.id, it.data?.id)
+            }
+            verify(remote, times(1)).getDetailTv(detailResponseDummy.id.toString())
         }
     }
 
     @Test
-    fun getDetailTv() {
-        runBlocking {
-            when (val detail = repository.getDetailTv(1416.toString()).first()) {
-                is Resource.Success -> {
-                    assertNotNull(detail.data)
-                    assertEquals(1416, detail.data?.id)
-                    assertEquals("Grey's Anatomy", detail.data?.name)
-                }
-                is Resource.Error -> {
-                    println("Test Failed")
-                }
-            }
-        }
+    fun testGetAllFavorite() {
+
+        val dataSourceFactory =
+            mock(DataSource.Factory::class.java) as DataSource.Factory<Int, FavoriteEntity>
+        `when`(local.getAllFavorite()).thenReturn(dataSourceFactory)
+
+        val discover =
+            Resource.Success(PagedListUtil.mockPagedList(DataDummy.generateDummyMovie()))
+        assertNotNull(discover.data)
+        assertEquals(
+            discover.data?.size?.toLong(),
+            DataDummy.generateDummyMovie().size.toLong()
+        )
     }
 
     @Test
     fun `Test if fetch data error`() {
-        runBlocking {
-            when (val detail = repository.getDetailMovie(0.toString()).first()) {
-                is Resource.Success -> {
-                    println("Test Failed")
-                }
-                is Resource.Error -> {
-                    assertNotNull(detail.message)
-                }
+        val detailResponseDummy = DataDummy.generateDummyDetailMovieResponse()
+        val detailResponse = MutableStateFlow(detailResponseDummy)
+        runBlockingTest {
+            `when`(remote.getDetailMovie(detailResponseDummy.id.toString())).thenReturn(
+                detailResponse.map {
+                    ApiResponse.Error(
+                        "Error"
+                    )
+                })
+            repository.getDetailMovie(detailResponseDummy.id.toString()).collect {
+                assertTrue(it is Resource.Error)
             }
+            verify(remote, times(1)).getDetailMovie(detailResponseDummy.id.toString())
         }
     }
 
@@ -213,9 +262,39 @@ class RepositoryTest {
         }
     }
 
-    @After
-    fun tearDown() {
-        mockWebServer.shutdown()
+    @Test
+    fun `Insert data favorite`() {
+        runBlockingTest {
+            val favorite = DataDummy.generateDummyFavorite().first()
+            doNothing().`when`(local).insertFavorite(favorite.toEntity())
+            repository.insertFavorite(favorite)
+
+            verify(local, times(1)).insertFavorite(favorite.toEntity())
+        }
     }
 
+    @Test
+    fun `Delete data favorite`() {
+        runBlockingTest {
+            val favorite = DataDummy.generateDummyFavorite().first()
+            doNothing().`when`(local).deleteFavorite(favorite.toEntity())
+            repository.deleteFavorite(favorite)
+
+            verify(local, times(1)).deleteFavorite(favorite.toEntity())
+        }
+    }
+
+    @Test
+    fun `Check data is favorited`() {
+        val isFavorited: Flow<Boolean> =
+            flow {
+                emit(true)
+            }
+        `when`(local.isFavorited("0")).thenReturn(isFavorited)
+
+        runBlockingTest {
+            val data = repository.isFavorited("0")
+            assertEquals(true, data.first())
+        }
+    }
 }

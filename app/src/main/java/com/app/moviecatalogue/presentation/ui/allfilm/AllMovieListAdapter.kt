@@ -1,37 +1,37 @@
-package com.app.moviecatalogue.presentation.ui.home.fragment.favorite
+package com.app.moviecatalogue.presentation.ui.allfilm
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.app.moviecatalogue.core.domain.usecase.model.Favorite
+import com.app.moviecatalogue.R
+import com.app.moviecatalogue.core.domain.usecase.model.Movie
 import com.app.moviecatalogue.databinding.FilmItemGridBinding
 import com.app.moviecatalogue.presentation.utils.toImageurl
 import com.bumptech.glide.Glide
 
-class FavoriteListAdapter : PagedListAdapter<Favorite, FavoriteListAdapter.GridViewHolder>(
-    DIFF_CALLBACK
-) {
+class AllMovieListAdapter :
+    PagedListAdapter<Movie, AllMovieListAdapter.GridViewHolder>(DIFF_CALLBACK) {
 
     companion object {
-        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Favorite>() {
-            override fun areItemsTheSame(oldItem: Favorite, newItem: Favorite): Boolean {
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Movie>() {
+            override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
                 return oldItem.id == newItem.id
             }
 
-            override fun areContentsTheSame(oldItem: Favorite, newItem: Favorite): Boolean {
+            override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
                 return oldItem == newItem
             }
         }
     }
 
-    var onClick: ((Favorite) -> Unit)? = null
+    var onClick: ((Movie) -> Unit)? = null
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): FavoriteListAdapter.GridViewHolder =
+    ): AllMovieListAdapter.GridViewHolder =
         GridViewHolder(
             FilmItemGridBinding.inflate(
                 LayoutInflater.from(parent.context),
@@ -40,7 +40,7 @@ class FavoriteListAdapter : PagedListAdapter<Favorite, FavoriteListAdapter.GridV
             )
         )
 
-    override fun onBindViewHolder(holder: FavoriteListAdapter.GridViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: AllMovieListAdapter.GridViewHolder, position: Int) {
         val item = getItem(position)
         if (item != null) {
             holder.bind(item)
@@ -58,10 +58,11 @@ class FavoriteListAdapter : PagedListAdapter<Favorite, FavoriteListAdapter.GridV
             }
         }
 
-        fun bind(item: Favorite) {
+        fun bind(item: Movie) {
             binding.gridTitle.text = item.title
             Glide.with(itemView.context)
                 .load(item.posterPath?.toImageurl())
+                .placeholder(R.drawable.ic_image)
                 .into(binding.gridPoster)
         }
     }

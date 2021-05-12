@@ -127,6 +127,28 @@ fun TvDetailResponse.toTvDetailDomain(): TvDetail {
     )
 }
 
+fun MoviesItem.toMovie(): Movie {
+    return Movie(
+        title = this.title,
+        posterPath = this.posterPath,
+        backdropPath = this.backdropPath,
+        releaseDate = this.releaseDate,
+        voteAverage = this.voteAverage,
+        id = this.id
+    )
+}
+
+fun TvShowItem.toTvShow(): TvShow {
+    return TvShow(
+        name = this.name,
+        posterPath = this.posterPath,
+        backdropPath = this.backdropPath,
+        firstAirDate = this.firstAirDate,
+        voteAverage = this.voteAverage,
+        id = this.id
+    )
+}
+
 fun <T> List<T>.toMovieDomain(): List<Movie> {
     if (this.isNullOrEmpty()) return emptyList()
     val listMovie = ArrayList<Movie>()
@@ -270,13 +292,13 @@ fun <T> List<T>.toTvShowDomain(): List<TvShow> {
     return listTvShow
 }
 
-fun FavoriteEntity.toDomain(): Favorite {
+fun FavoriteEntity?.toDomain(): Favorite {
     return this.let {
         Favorite(
-            it.title,
-            it.posterPath,
-            it.type,
-            it.id
+            it?.title,
+            it?.posterPath,
+            it?.type,
+            it?.id
         )
     }
 }

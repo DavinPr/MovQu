@@ -2,6 +2,7 @@ package com.app.moviecatalogue.presentation.di
 
 import com.app.moviecatalogue.core.domain.usecase.AppInteractor
 import com.app.moviecatalogue.core.domain.usecase.AppUseCase
+import com.app.moviecatalogue.presentation.ui.allfilm.AllFilmViewModel
 import com.app.moviecatalogue.presentation.ui.detail.DetailViewModel
 import com.app.moviecatalogue.presentation.ui.home.fragment.favorite.FavoriteViewModel
 import com.app.moviecatalogue.presentation.ui.home.fragment.movie.MovieViewModel
@@ -22,4 +23,5 @@ val viewModelModule = module {
     viewModel { TvShowViewModel(get()) }
     viewModel { DetailViewModel(get()) }
     viewModel { FavoriteViewModel(get()) }
+    viewModel { AllFilmViewModel(get()) }
 }

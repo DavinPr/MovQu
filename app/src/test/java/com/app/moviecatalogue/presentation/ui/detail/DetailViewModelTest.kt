@@ -3,8 +3,9 @@ package com.app.moviecatalogue.presentation.ui.detail
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.app.moviecatalogue.core.data.Resource
 import com.app.moviecatalogue.core.domain.usecase.AppInteractor
-import com.app.moviecatalogue.utils.getValueOrAwait
 import com.app.moviecatalogue.presentation.utils.DataDummy
+import com.app.moviecatalogue.utils.getValueOrAwait
+import com.nhaarman.mockitokotlin2.doNothing
 import com.nhaarman.mockitokotlin2.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flow
@@ -15,6 +16,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
+import org.mockito.Mockito
 import org.mockito.Mockito.`when`
 import org.mockito.junit.MockitoJUnitRunner
 
@@ -37,32 +39,72 @@ class DetailViewModelTest {
         val detailMovie = flow {
             emit(dataDummyMovie)
         }
-        `when`(useCase.getDetailMovie("412656")).thenReturn(detailMovie)
+        `when`(useCase.getDetailMovie(DataDummy.generateDummyDetailMovie().id.toString())).thenReturn(
+            detailMovie
+        )
 
         val detailTv = flow {
             emit(dataDummyTv)
         }
-        `when`(useCase.getDetailTv("88396")).thenReturn(detailTv)
+        `when`(useCase.getDetailTv(DataDummy.generateDummyDetailTv().id.toString())).thenReturn(detailTv)
 
         viewModel = DetailViewModel(useCase)
     }
 
     @Test
     fun `Test detail movie not null and equal`() {
-        val id = "412656"
+        val id = DataDummy.generateDummyDetailMovie().id.toString()
+        val title = DataDummy.generateDummyDetailMovie().title
         val data = viewModel.getDetailMovie(id).getValueOrAwait().data
         verify(useCase).getDetailMovie(id)
         assertNotNull(data)
         assertEquals(id, data?.id.toString())
-        assertEquals("Godzilla vs Kong", data?.title)
+        assertEquals(title, data?.title)
     }
 
     @Test
     fun `Test detail tv not null and equal`() {
-        val id = "88396"
+        val id = DataDummy.generateDummyDetailTv().id.toString()
+        val title = DataDummy.generateDummyDetailTv().name
         val data = viewModel.getDetailTv(id).getValueOrAwait().data
         verify(useCase).getDetailTv(id)
         assertNotNull(data)
-        assertEquals("The Falcon and the Winter Soldier", data?.name)
+        assertEquals(title, data?.name)
+    }
+
+    @Test
+    fun insertFavoriteFromMovie() {
+        val detail = DataDummy.generateDummyDetailMovie()
+        doNothing().`when`(useCase).insertFavoriteFromMovie(detail)
+        useCase.insertFavoriteFromMovie(detail)
+
+        verify(useCase, Mockito.times(1)).insertFavoriteFromMovie(detail)
+    }
+
+    @Test
+    fun insertFavoriteFromTv() {
+        val detail = DataDummy.generateDummyDetailTv()
+        doNothing().`when`(useCase).insertFavoriteFromTv(detail)
+        useCase.insertFavoriteFromTv(detail)
+
+        verify(useCase, Mockito.times(1)).insertFavoriteFromTv(detail)
+    }
+
+    @Test
+    fun deleteFavoriteFromMovie() {
+        val detail = DataDummy.generateDummyDetailMovie()
+        doNothing().`when`(useCase).deleteFavoriteFromMovie(detail)
+        useCase.deleteFavoriteFromMovie(detail)
+
+        verify(useCase, Mockito.times(1)).deleteFavoriteFromMovie(detail)
+    }
+
+    @Test
+    fun deleteFavoriteFromTv() {
+        val detail = DataDummy.generateDummyDetailTv()
+        doNothing().`when`(useCase).deleteFavoriteFromTv(detail)
+        useCase.deleteFavoriteFromTv(detail)
+
+        verify(useCase, Mockito.times(1)).deleteFavoriteFromTv(detail)
     }
 }

@@ -9,6 +9,8 @@ import com.app.moviecatalogue.core.data.local.room.FilmDatabase
 import com.app.moviecatalogue.core.data.remote.RemoteDataSource
 import com.app.moviecatalogue.core.data.remote.network.ApiService
 import com.app.moviecatalogue.core.utils.AppExecutors
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidContext
@@ -48,8 +50,9 @@ val databaseModule = module {
 
 val repositoryModule = module {
     factory { AppExecutors() }
+    factory { CoroutineScope(Dispatchers.IO) }
 
     single { LocalDataSource(get()) }
-    single { RemoteDataSource(get()) }
+    single { RemoteDataSource(get(), get()) }
     single<IAppRepository> { AppRepository(get(), get(), get()) }
 }

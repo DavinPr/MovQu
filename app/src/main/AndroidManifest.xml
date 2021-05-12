@@ -12,17 +12,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MovieCatalogue">
+        <activity android:name=".presentation.ui.allfilm.AllFilmActivity"></activity>
         <activity
             android:name=".presentation.ui.splashscreen.SplashScreenActivity"
-            android:theme="@style/Theme.MovieCatalogue.TranslucentStatusbar"
-            android:noHistory="true">
-
+            android:noHistory="true"
+            android:theme="@style/Theme.MovieCatalogue.TranslucentStatusbar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity android:name=".presentation.ui.detail.DetailActivity" />
         <activity android:name=".presentation.ui.home.HomeActivity" />

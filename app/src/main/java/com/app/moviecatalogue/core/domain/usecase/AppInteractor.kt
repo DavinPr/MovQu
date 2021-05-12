@@ -9,20 +9,38 @@ import com.app.moviecatalogue.core.utils.toFavorite
 import kotlinx.coroutines.flow.Flow
 
 class AppInteractor(private val appRepository: IAppRepository) : AppUseCase {
+    override fun getAllListMovieDiscover(): Flow<Resource<PagedList<Movie>>> =
+        appRepository.getAllListMovieDiscover()
+
     override fun getListMovieDiscover(): Flow<Resource<List<Movie>>> =
         appRepository.getListMovieDiscover()
+
+    override fun getAllListMovieNowPlaying(): Flow<Resource<PagedList<Movie>>> =
+        appRepository.getAllListMovieNowPlaying()
 
     override fun getListMovieNowPlaying(): Flow<Resource<List<Movie>>> =
         appRepository.getListMovieNowPlaying()
 
+    override fun getAllListMovieUpcoming(): Flow<Resource<PagedList<Movie>>> =
+        appRepository.getAllListMovieUpcoming()
+
     override fun getListMovieUpcoming(): Flow<Resource<List<Movie>>> =
         appRepository.getListMovieUpcoming()
+
+    override fun getAllListTvDiscover(): Flow<Resource<PagedList<TvShow>>> =
+        appRepository.getAllListTvDiscover()
 
     override fun getListTvDiscover(): Flow<Resource<List<TvShow>>> =
         appRepository.getListTvDiscover()
 
+    override fun getAllListTvAiringToday(): Flow<Resource<PagedList<TvShow>>> =
+        appRepository.getAllListTvAiringToday()
+
     override fun getListTvAiringToday(): Flow<Resource<List<TvShow>>> =
         appRepository.getListTvAiringToday()
+
+    override fun getAllListTvOnTheAir(): Flow<Resource<PagedList<TvShow>>> =
+        appRepository.getAllListTvOnTheAir()
 
     override fun getListTvOnTheAir(): Flow<Resource<List<TvShow>>> =
         appRepository.getListTvOnTheAir()

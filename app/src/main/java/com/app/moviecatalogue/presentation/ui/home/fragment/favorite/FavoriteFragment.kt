@@ -12,7 +12,7 @@ import com.app.moviecatalogue.databinding.FragmentFavoriteBinding
 import com.app.moviecatalogue.presentation.ui.detail.DetailActivity
 import com.app.moviecatalogue.presentation.ui.home.custom.customdecoration.GridSpacesItemDecoration
 import com.app.moviecatalogue.presentation.ui.home.fragment.favorite.category.CategoryListAdapter
-import com.app.moviecatalogue.presentation.utils.Constants
+import com.app.moviecatalogue.Constants
 import com.google.android.flexbox.AlignItems
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager

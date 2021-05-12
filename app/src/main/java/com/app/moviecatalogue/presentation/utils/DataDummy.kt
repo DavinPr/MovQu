@@ -1,10 +1,9 @@
 package com.app.moviecatalogue.presentation.utils
 
 import com.app.moviecatalogue.core.data.local.entity.*
-import com.app.moviecatalogue.core.domain.usecase.model.Movie
-import com.app.moviecatalogue.core.domain.usecase.model.MovieDetail
-import com.app.moviecatalogue.core.domain.usecase.model.TvDetail
-import com.app.moviecatalogue.core.domain.usecase.model.TvShow
+import com.app.moviecatalogue.core.data.remote.response.MovieDetailResponse
+import com.app.moviecatalogue.core.data.remote.response.TvDetailResponse
+import com.app.moviecatalogue.core.domain.usecase.model.*
 
 object DataDummy {
 
@@ -316,18 +315,75 @@ object DataDummy {
         return tv
     }
 
+    fun generateDummyFavorite(): List<Favorite> {
+        val movie = ArrayList<Favorite>()
+
+        movie.add(
+            Favorite(
+                "Godzilla vs. Kong",
+                "/pgqgaUx1cJb5oZQQ5v0tNARCeBp.jpg",
+                "movie",
+                399566
+            )
+        )
+
+        movie.add(
+            Favorite(
+                "Zack Snyder's Justice League",
+                "/tnAuB8q5vv7Ax9UAEje5Xi4BXik.jpg",
+                "movie",
+                791373
+            )
+        )
+
+        movie.add(
+            Favorite(
+                "Chaos Walking",
+                "/9kg73Mg8WJKlB9Y2SAJzeDKAnuB.jpg",
+                "movie",
+                412656
+            )
+        )
+        return movie
+    }
+
     fun generateDummyDetailMovie(): MovieDetail =
         MovieDetail(
             title = "Godzilla vs Kong",
             backdrop_path = "/5NxjLfs7Bi07bfZCRl9CCnUw7AA.jpg",
-            id = 412656,
+            id = 399566,
             poster_path = "/9kg73Mg8WJKlB9Y2SAJzeDKAnuB.jpg",
             release_date = "2021-02-24",
             vote_average = 7.5
         )
 
+    fun generateDummyDetailMovieResponse(): MovieDetailResponse =
+        MovieDetailResponse(
+            title = "Godzilla vs Kong",
+            backdrop_path = "/5NxjLfs7Bi07bfZCRl9CCnUw7AA.jpg",
+            id = 399566,
+            poster_path = "/9kg73Mg8WJKlB9Y2SAJzeDKAnuB.jpg",
+            release_date = "2021-02-24",
+            vote_average = 7.5,
+            genres = listOf(),
+            overview = "null",
+            popularity = 0.0,
+            runtime = 0,
+            tagline = "null"
+        )
+
     fun generateDummyDetailTv(): TvDetail =
         TvDetail(
+            posterPath = "/6kbAMLteGO8yyewYau6bJ683sw7.jpg",
+            backdropPath = "/b0WmHGc8LHTdGCVzxRb3IBMur57.jpg",
+            voteAverage = 7.8,
+            firstAirDate = "2021-03-19",
+            name = "The Falcon and the Winter Soldier",
+            id = 88396
+        )
+
+    fun generateDummyDetailTvResponse(): TvDetailResponse =
+        TvDetailResponse(
             posterPath = "/6kbAMLteGO8yyewYau6bJ683sw7.jpg",
             backdropPath = "/b0WmHGc8LHTdGCVzxRb3IBMur57.jpg",
             voteAverage = 7.8,

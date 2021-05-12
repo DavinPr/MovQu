@@ -13,16 +13,21 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
+import com.app.moviecatalogue.Constants.ID_KEY
+import com.app.moviecatalogue.Constants.LIST_TYPE
+import com.app.moviecatalogue.Constants.TV_AIRING_TODAY_TYPE
+import com.app.moviecatalogue.Constants.TV_DISCOVER_TYPE
+import com.app.moviecatalogue.Constants.TV_ON_THE_AIR_TYPE
+import com.app.moviecatalogue.Constants.TV_TYPE
+import com.app.moviecatalogue.Constants.TYPE_KEY
 import com.app.moviecatalogue.R
 import com.app.moviecatalogue.core.data.Resource
 import com.app.moviecatalogue.core.domain.usecase.model.TvShow
 import com.app.moviecatalogue.databinding.FragmentTvShowBinding
+import com.app.moviecatalogue.presentation.ui.allfilm.AllFilmActivity
 import com.app.moviecatalogue.presentation.ui.detail.DetailActivity
 import com.app.moviecatalogue.presentation.ui.home.fragment.adapter.FilmItemCarouselAdapter
 import com.app.moviecatalogue.presentation.ui.home.fragment.adapter.FilmItemHorizontalAdapter
-import com.app.moviecatalogue.presentation.utils.Constants.ID_KEY
-import com.app.moviecatalogue.presentation.utils.Constants.TV_TYPE
-import com.app.moviecatalogue.presentation.utils.Constants.TYPE_KEY
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class TvShowFragment : Fragment() {
@@ -67,7 +72,12 @@ class TvShowFragment : Fragment() {
                 }
             }
         }
-        binding.discoverLayout.viewAll.setOnClickListener { implementedSoon() }
+        binding.discoverLayout.viewAll.setOnClickListener {
+            val intent = Intent(activity, AllFilmActivity::class.java)
+            intent.putExtra(TYPE_KEY, TV_TYPE)
+            intent.putExtra(LIST_TYPE, TV_DISCOVER_TYPE)
+            startActivity(intent)
+        }
         binding.discoverLayout.viewpagerFilm.apply {
             adapter = discoverAdapter
             clipToPadding = false
@@ -143,7 +153,12 @@ class TvShowFragment : Fragment() {
 
 
         binding.airingTodayLayout.apply {
-            viewAll.setOnClickListener { implementedSoon() }
+            viewAll.setOnClickListener {
+                val intent = Intent(activity, AllFilmActivity::class.java)
+                intent.putExtra(TYPE_KEY, TV_TYPE)
+                intent.putExtra(LIST_TYPE, TV_AIRING_TODAY_TYPE)
+                startActivity(intent)
+            }
             tvTitleCategory.text = resources.getString(R.string.airing_today)
             rvFilm.also {
                 it.adapter = airingTodayAdapter
@@ -164,7 +179,7 @@ class TvShowFragment : Fragment() {
         val onTheAirAdapter = FilmItemHorizontalAdapter<TvShow>()
         viewModel.getTvOnTheAir.observe(viewLifecycleOwner) { tv ->
             val data = tv.data
-            binding.airingTodayLayout.listFilmLoading.root.apply {
+            binding.onTheAirLayout.listFilmLoading.root.apply {
                 isVisible = tv is Resource.Loading && data.isNullOrEmpty()
             }
             if (data != null) {
@@ -173,7 +188,12 @@ class TvShowFragment : Fragment() {
         }
 
         binding.onTheAirLayout.apply {
-            viewAll.setOnClickListener { implementedSoon() }
+            viewAll.setOnClickListener {
+                val intent = Intent(activity, AllFilmActivity::class.java)
+                intent.putExtra(TYPE_KEY, TV_TYPE)
+                intent.putExtra(LIST_TYPE, TV_ON_THE_AIR_TYPE)
+                startActivity(intent)
+            }
             tvTitleCategory.text = resources.getString(R.string.on_the_air)
             rvFilm.also {
                 it.layoutManager =

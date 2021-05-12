@@ -37,11 +37,23 @@ class HomeActivityTest {
     @Test
     fun loadMovie() {
         onView(withId(R.id.viewpager_film)).check(matches(isDisplayed()))
-        onView(withId(R.id.btn_next)).perform(click())
         onView(withFirstIndex(withId(R.id.rv_film))).check(matches(isDisplayed()))
         onView(withFirstIndex(withId(R.id.rv_film))).perform(
             RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(
                 5
+            )
+        )
+    }
+
+    @Test
+    fun loadAllMovie() {
+        onView(withId(R.id.viewpager_film)).check(matches(isDisplayed()))
+        onView(withFirstIndex(withId(R.id.view_all))).perform(click())
+        onView(withId(R.id.rv_film)).check(matches(isDisplayed()))
+        onView(withId(R.id.rv_film)).perform(
+            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                0,
+                click()
             )
         )
     }
@@ -55,12 +67,50 @@ class HomeActivityTest {
             )
         )
         onView(withId(R.id.viewpager_film)).check(matches(isDisplayed()))
-        onView(withId(R.id.btn_next)).perform(click())
         onView(withFirstIndex(withId(R.id.rv_film))).check(matches(isDisplayed()))
         onView(withFirstIndex(withId(R.id.rv_film))).perform(
             RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(
                 5
             )
+        )
+    }
+
+    @Test
+    fun loadAllTv() {
+        onView(withId(R.id.rv_bottom_icon)).perform(
+            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                1,
+                click()
+            )
+        )
+        onView(withId(R.id.viewpager_film)).check(matches(isDisplayed()))
+        onView(withFirstIndex(withId(R.id.view_all))).perform(click())
+        onView(withId(R.id.rv_film)).check(matches(isDisplayed()))
+        onView(withId(R.id.rv_film)).perform(
+            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                0,
+                click()
+            )
+        )
+    }
+
+    @Test
+    fun loadFavorite() {
+        onView(withId(R.id.rv_bottom_icon)).perform(
+            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                2,
+                click()
+            )
+        )
+        onView(withId(R.id.rv_favorite)).check(matches(isDisplayed()))
+        onView(withId(R.id.rv_category)).perform(
+            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(1, click())
+        )
+        onView(withId(R.id.rv_category)).perform(
+            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(2, click())
+        )
+        onView(withId(R.id.rv_favorite)).perform(
+            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(0, click())
         )
     }
 
@@ -75,6 +125,7 @@ class HomeActivityTest {
         onView(withId(R.id.title_movie)).check(matches(isDisplayed()))
         onView(withId(R.id.date_movie)).check(matches(isDisplayed()))
         onView(withId(R.id.btn_back)).perform(click())
+        onView(withId(R.id.btn_favorite)).perform(click())
     }
 
     @Test
@@ -94,6 +145,7 @@ class HomeActivityTest {
         onView(withId(R.id.title_tv)).check(matches(isDisplayed()))
         onView(withId(R.id.first_date_tv)).check(matches(isDisplayed()))
         onView(withId(R.id.btn_back)).perform(click())
+        onView(withId(R.id.btn_favorite)).perform(click())
     }
 
     private fun withFirstIndex(matcher: Matcher<View?>): Matcher<View?> {
