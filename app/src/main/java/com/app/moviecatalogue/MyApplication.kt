@@ -1,9 +1,9 @@
 package com.app.moviecatalogue
 
 import android.app.Application
-import com.app.moviecatalogue.core.di.databaseModule
-import com.app.moviecatalogue.core.di.networkModule
-import com.app.moviecatalogue.core.di.repositoryModule
+import com.moviecatalogue.core.di.databaseModule
+import com.moviecatalogue.core.di.networkModule
+import com.moviecatalogue.core.di.repositoryModule
 import com.app.moviecatalogue.presentation.di.useCaseModule
 import com.app.moviecatalogue.presentation.di.viewModelModule
 import kotlinx.coroutines.ExperimentalCoroutinesApi

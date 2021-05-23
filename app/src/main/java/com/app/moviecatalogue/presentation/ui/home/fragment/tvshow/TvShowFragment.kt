@@ -13,16 +13,16 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
-import com.app.moviecatalogue.Constants.ID_KEY
-import com.app.moviecatalogue.Constants.LIST_TYPE
-import com.app.moviecatalogue.Constants.TV_AIRING_TODAY_TYPE
-import com.app.moviecatalogue.Constants.TV_DISCOVER_TYPE
-import com.app.moviecatalogue.Constants.TV_ON_THE_AIR_TYPE
-import com.app.moviecatalogue.Constants.TV_TYPE
-import com.app.moviecatalogue.Constants.TYPE_KEY
+import com.moviecatalogue.core.utils.Constants.ID_KEY
+import com.moviecatalogue.core.utils.Constants.LIST_TYPE
+import com.moviecatalogue.core.utils.Constants.TV_AIRING_TODAY_TYPE
+import com.moviecatalogue.core.utils.Constants.TV_DISCOVER_TYPE
+import com.moviecatalogue.core.utils.Constants.TV_ON_THE_AIR_TYPE
+import com.moviecatalogue.core.utils.Constants.TV_TYPE
+import com.moviecatalogue.core.utils.Constants.TYPE_KEY
 import com.app.moviecatalogue.R
-import com.app.moviecatalogue.core.data.Resource
-import com.app.moviecatalogue.core.domain.usecase.model.TvShow
+import com.moviecatalogue.core.data.Resource
+import com.moviecatalogue.core.domain.usecase.model.TvShow
 import com.app.moviecatalogue.databinding.FragmentTvShowBinding
 import com.app.moviecatalogue.presentation.ui.allfilm.AllFilmActivity
 import com.app.moviecatalogue.presentation.ui.detail.DetailActivity
@@ -62,7 +62,7 @@ class TvShowFragment : Fragment() {
                         btnNext.visibility = View.VISIBLE
                     }
                 }
-                discoverAdapter.setData(tv.data)
+                discoverAdapter.setData(data)
                 binding.discoverLayout.apply {
                     discoverTitle.text = data[0].name
                     discoverRating.also {
@@ -147,7 +147,7 @@ class TvShowFragment : Fragment() {
                 isVisible = tv is Resource.Loading && data.isNullOrEmpty()
             }
             if (data != null) {
-                airingTodayAdapter.setData(tv.data)
+                airingTodayAdapter.setData(data)
             }
         }
 
@@ -183,7 +183,7 @@ class TvShowFragment : Fragment() {
                 isVisible = tv is Resource.Loading && data.isNullOrEmpty()
             }
             if (data != null) {
-                onTheAirAdapter.setData(tv.data)
+                onTheAirAdapter.setData(data)
             }
         }
 

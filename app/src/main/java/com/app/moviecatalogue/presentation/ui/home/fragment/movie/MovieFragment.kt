@@ -13,16 +13,16 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
-import com.app.moviecatalogue.Constants.ID_KEY
-import com.app.moviecatalogue.Constants.LIST_TYPE
-import com.app.moviecatalogue.Constants.MOVIE_DISCOVER_TYPE
-import com.app.moviecatalogue.Constants.MOVIE_NOW_PLAYING_TYPE
-import com.app.moviecatalogue.Constants.MOVIE_TYPE
-import com.app.moviecatalogue.Constants.MOVIE_UPCOMING_TYPE
-import com.app.moviecatalogue.Constants.TYPE_KEY
+import com.moviecatalogue.core.utils.Constants.ID_KEY
+import com.moviecatalogue.core.utils.Constants.LIST_TYPE
+import com.moviecatalogue.core.utils.Constants.MOVIE_DISCOVER_TYPE
+import com.moviecatalogue.core.utils.Constants.MOVIE_NOW_PLAYING_TYPE
+import com.moviecatalogue.core.utils.Constants.MOVIE_TYPE
+import com.moviecatalogue.core.utils.Constants.MOVIE_UPCOMING_TYPE
+import com.moviecatalogue.core.utils.Constants.TYPE_KEY
 import com.app.moviecatalogue.R
-import com.app.moviecatalogue.core.data.Resource
-import com.app.moviecatalogue.core.domain.usecase.model.Movie
+import com.moviecatalogue.core.data.Resource
+import com.moviecatalogue.core.domain.usecase.model.Movie
 import com.app.moviecatalogue.databinding.FragmentMovieBinding
 import com.app.moviecatalogue.presentation.ui.allfilm.AllFilmActivity
 import com.app.moviecatalogue.presentation.ui.detail.DetailActivity
@@ -63,7 +63,7 @@ class MovieFragment : Fragment() {
                         btnNext.visibility = View.VISIBLE
                     }
                 }
-                discoverAdapter.setData(movies.data)
+                discoverAdapter.setData(data)
                 binding.discoverLayout.apply {
                     discoverTitle.text = data[0].title
                     discoverRating.also {
@@ -150,7 +150,7 @@ class MovieFragment : Fragment() {
                 isVisible = movies is Resource.Loading && data.isNullOrEmpty()
             }
             if (data != null) {
-                nowPlayingAdapter.setData(movies.data)
+                nowPlayingAdapter.setData(data)
             }
         }
 
@@ -185,7 +185,7 @@ class MovieFragment : Fragment() {
                 isVisible = movies is Resource.Loading && data.isNullOrEmpty()
             }
             if (data != null) {
-                upcomingAdapter.setData(movies.data)
+                upcomingAdapter.setData(data)
             }
         }
 

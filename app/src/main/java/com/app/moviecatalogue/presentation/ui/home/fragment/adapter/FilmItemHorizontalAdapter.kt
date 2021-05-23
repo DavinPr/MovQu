@@ -3,8 +3,8 @@ package com.app.moviecatalogue.presentation.ui.home.fragment.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.app.moviecatalogue.core.domain.usecase.model.Movie
-import com.app.moviecatalogue.core.domain.usecase.model.TvShow
+import com.moviecatalogue.core.domain.usecase.model.Movie
+import com.moviecatalogue.core.domain.usecase.model.TvShow
 import com.app.moviecatalogue.databinding.FilmItemHorizontalBinding
 import com.app.moviecatalogue.presentation.utils.toImageurl
 import com.bumptech.glide.Glide

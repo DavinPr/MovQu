@@ -1,10 +1,10 @@
 package com.app.moviecatalogue.presentation.ui.detail
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.app.moviecatalogue.core.data.Resource
-import com.app.moviecatalogue.core.domain.usecase.AppInteractor
-import com.app.moviecatalogue.presentation.utils.DataDummy
+import com.app.moviecatalogue.utils.DataDummy
 import com.app.moviecatalogue.utils.getValueOrAwait
+import com.moviecatalogue.core.data.Resource
+import com.moviecatalogue.core.domain.usecase.AppInteractor
 import com.nhaarman.mockitokotlin2.doNothing
 import com.nhaarman.mockitokotlin2.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi

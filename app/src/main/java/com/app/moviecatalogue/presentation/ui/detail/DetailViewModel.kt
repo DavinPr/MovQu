@@ -2,9 +2,9 @@ package com.app.moviecatalogue.presentation.ui.detail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
-import com.app.moviecatalogue.core.domain.usecase.AppUseCase
-import com.app.moviecatalogue.core.domain.usecase.model.MovieDetail
-import com.app.moviecatalogue.core.domain.usecase.model.TvDetail
+import com.moviecatalogue.core.domain.usecase.AppUseCase
+import com.moviecatalogue.core.domain.usecase.model.MovieDetail
+import com.moviecatalogue.core.domain.usecase.model.TvDetail
 
 class DetailViewModel(private val useCase: AppUseCase) : ViewModel() {
     fun getDetailMovie(id: String) = useCase.getDetailMovie(id).asLiveData()

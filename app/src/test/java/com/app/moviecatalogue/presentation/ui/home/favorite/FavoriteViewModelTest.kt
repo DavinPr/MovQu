@@ -5,10 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.paging.PagedList
 import androidx.paging.PositionalDataSource
-import com.app.moviecatalogue.core.domain.usecase.AppInteractor
-import com.app.moviecatalogue.core.domain.usecase.model.Favorite
+import com.moviecatalogue.core.domain.usecase.AppInteractor
+import com.moviecatalogue.core.domain.usecase.model.Favorite
 import com.app.moviecatalogue.presentation.ui.home.fragment.favorite.FavoriteViewModel
-import com.app.moviecatalogue.presentation.utils.DataDummy
+import com.app.moviecatalogue.utils.DataDummy
 import com.app.moviecatalogue.utils.getValueOrAwait
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview

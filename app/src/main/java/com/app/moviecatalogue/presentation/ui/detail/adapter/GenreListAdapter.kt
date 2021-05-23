@@ -3,8 +3,8 @@ package com.app.moviecatalogue.presentation.ui.detail.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.app.moviecatalogue.core.domain.usecase.model.MovieGenre
-import com.app.moviecatalogue.core.domain.usecase.model.TvGenre
+import com.moviecatalogue.core.domain.usecase.model.MovieGenre
+import com.moviecatalogue.core.domain.usecase.model.TvGenre
 import com.app.moviecatalogue.databinding.DetailCategoryItemBinding
 
 class GenreListAdapter<T> : RecyclerView.Adapter<GenreListAdapter<T>.GenreViewHolder>() {

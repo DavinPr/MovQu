@@ -6,7 +6,7 @@ import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.app.moviecatalogue.R
-import com.app.moviecatalogue.core.domain.usecase.model.TvShow
+import com.moviecatalogue.core.domain.usecase.model.TvShow
 import com.app.moviecatalogue.databinding.FilmItemGridBinding
 import com.app.moviecatalogue.presentation.utils.toImageurl
 import com.bumptech.glide.Glide

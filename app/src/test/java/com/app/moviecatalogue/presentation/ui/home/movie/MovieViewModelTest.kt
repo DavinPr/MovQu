@@ -1,11 +1,11 @@
 package com.app.moviecatalogue.presentation.ui.home.movie
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.app.moviecatalogue.core.data.Resource
-import com.app.moviecatalogue.core.domain.usecase.AppInteractor
-import com.app.moviecatalogue.utils.getValueOrAwait
+import com.moviecatalogue.core.data.Resource
+import com.moviecatalogue.core.domain.usecase.AppInteractor
 import com.app.moviecatalogue.presentation.ui.home.fragment.movie.MovieViewModel
-import com.app.moviecatalogue.presentation.utils.DataDummy
+import com.app.moviecatalogue.utils.DataDummy
+import com.app.moviecatalogue.utils.getValueOrAwait
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flow
 import org.junit.Assert.assertEquals

@@ -25,4 +25,5 @@
     <string name="now_playing_movie">Now Playing Movie</string>
     <string name="upcoming_movie">Upcoming Movie</string>
     <string name="discover_tv">Discover Tv Show</string>
+    <string name="title_favorite">Favorite</string>
 </resources>
