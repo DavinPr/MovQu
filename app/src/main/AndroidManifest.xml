@@ -12,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MovieCatalogue">
-        <activity android:name=".presentation.ui.allfilm.AllFilmActivity"></activity>
+        <activity android:name=".presentation.ui.allfilm.AllFilmActivity" />
         <activity
             android:name=".presentation.ui.splashscreen.SplashScreenActivity"
             android:noHistory="true"

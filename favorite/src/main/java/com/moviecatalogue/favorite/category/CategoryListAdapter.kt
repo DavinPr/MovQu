@@ -1,11 +1,11 @@
-package com.app.moviecatalogue.presentation.ui.home.fragment.favorite.category
+package com.moviecatalogue.favorite.category
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.app.moviecatalogue.R
-import com.app.moviecatalogue.databinding.HomeCategoryItemBinding
+import com.moviecatalogue.favorite.databinding.HomeCategoryItemBinding
 
 class CategoryListAdapter : RecyclerView.Adapter<CategoryListAdapter.GenreViewHolder>() {
 
@@ -22,12 +22,12 @@ class CategoryListAdapter : RecyclerView.Adapter<CategoryListAdapter.GenreViewHo
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): CategoryListAdapter.GenreViewHolder =
+    ): GenreViewHolder =
         GenreViewHolder(
             HomeCategoryItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         )
 
-    override fun onBindViewHolder(holder: CategoryListAdapter.GenreViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: GenreViewHolder, position: Int) {
         val category = list[position]
         if (position == currPos) {
             holder.setBackgroundColor(R.color.primaryColor, true)

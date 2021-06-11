@@ -2,7 +2,7 @@ package com.moviecatalogue.core.domain.usecase
 
 import androidx.lifecycle.LiveData
 import androidx.paging.PagedList
-import com.moviecatalogue.core.data.IAppRepository
+import com.moviecatalogue.core.domain.usecase.repository.IAppRepository
 import com.moviecatalogue.core.data.Resource
 import com.moviecatalogue.core.domain.usecase.model.*
 import com.moviecatalogue.core.utils.toFavorite

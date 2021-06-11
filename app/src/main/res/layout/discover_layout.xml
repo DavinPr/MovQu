@@ -82,7 +82,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="16dp"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:dotsColor="@color/primaryColor"
         app:dotsCornerRadius="8dp"
         app:dotsSize="8dp"

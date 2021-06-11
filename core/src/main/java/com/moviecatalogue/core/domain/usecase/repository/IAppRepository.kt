@@ -1,7 +1,8 @@
-package com.moviecatalogue.core.data
+package com.moviecatalogue.core.domain.usecase.repository
 
 import androidx.lifecycle.LiveData
 import androidx.paging.PagedList
+import com.moviecatalogue.core.data.Resource
 import com.moviecatalogue.core.domain.usecase.model.*
 import kotlinx.coroutines.flow.Flow
 

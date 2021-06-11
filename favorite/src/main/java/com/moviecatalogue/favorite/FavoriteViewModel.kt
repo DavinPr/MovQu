@@ -1,9 +1,9 @@
-package com.app.moviecatalogue.presentation.ui.home.fragment.favorite
+package com.moviecatalogue.favorite
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import com.moviecatalogue.core.domain.usecase.AppUseCase
-import com.app.moviecatalogue.presentation.ui.home.fragment.favorite.category.Category
+import com.moviecatalogue.favorite.category.Category
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.channels.BroadcastChannel

@@ -1,4 +1,4 @@
-package com.app.moviecatalogue.presentation.ui.home.favorite
+package com.moviecatalogue.favorite
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
@@ -7,9 +7,6 @@ import androidx.paging.PagedList
 import androidx.paging.PositionalDataSource
 import com.moviecatalogue.core.domain.usecase.AppInteractor
 import com.moviecatalogue.core.domain.usecase.model.Favorite
-import com.app.moviecatalogue.presentation.ui.home.fragment.favorite.FavoriteViewModel
-import com.app.moviecatalogue.utils.DataDummy
-import com.app.moviecatalogue.utils.getValueOrAwait
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.runBlocking

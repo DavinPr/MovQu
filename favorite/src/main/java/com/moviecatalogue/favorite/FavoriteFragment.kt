@@ -1,4 +1,4 @@
-package com.app.moviecatalogue.presentation.ui.home.fragment.favorite
+package com.moviecatalogue.favorite
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,20 +8,21 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
-import com.app.moviecatalogue.databinding.FragmentFavoriteBinding
 import com.app.moviecatalogue.presentation.ui.detail.DetailActivity
 import com.app.moviecatalogue.presentation.ui.home.custom.customdecoration.GridSpacesItemDecoration
-import com.app.moviecatalogue.presentation.ui.home.fragment.favorite.category.CategoryListAdapter
-import com.moviecatalogue.core.utils.Constants
 import com.google.android.flexbox.AlignItems
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
+import com.moviecatalogue.core.utils.Constants
+import com.moviecatalogue.favorite.category.CategoryListAdapter
+import com.moviecatalogue.favorite.databinding.FragmentFavoriteBinding
+import com.moviecatalogue.favorite.di.favoriteModule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.context.loadKoinModules
 import kotlin.math.roundToInt
-
 
 @ExperimentalCoroutinesApi
 @FlowPreview
@@ -36,6 +37,7 @@ class FavoriteFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
+        loadKoinModules(favoriteModule)
         _binding = FragmentFavoriteBinding.inflate(inflater, container, false)
         return binding.root
     }

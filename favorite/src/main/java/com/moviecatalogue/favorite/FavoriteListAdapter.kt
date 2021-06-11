@@ -1,14 +1,14 @@
-package com.app.moviecatalogue.presentation.ui.home.fragment.favorite
+package com.moviecatalogue.favorite
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.moviecatalogue.core.domain.usecase.model.Favorite
 import com.app.moviecatalogue.databinding.FilmItemGridBinding
 import com.app.moviecatalogue.presentation.utils.toImageurl
 import com.bumptech.glide.Glide
+import com.moviecatalogue.core.domain.usecase.model.Favorite
 
 class FavoriteListAdapter : PagedListAdapter<Favorite, FavoriteListAdapter.GridViewHolder>(
     DIFF_CALLBACK
@@ -31,7 +31,7 @@ class FavoriteListAdapter : PagedListAdapter<Favorite, FavoriteListAdapter.GridV
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): FavoriteListAdapter.GridViewHolder =
+    ): GridViewHolder =
         GridViewHolder(
             FilmItemGridBinding.inflate(
                 LayoutInflater.from(parent.context),
@@ -40,7 +40,7 @@ class FavoriteListAdapter : PagedListAdapter<Favorite, FavoriteListAdapter.GridV
             )
         )
 
-    override fun onBindViewHolder(holder: FavoriteListAdapter.GridViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: GridViewHolder, position: Int) {
         val item = getItem(position)
         if (item != null) {
             holder.bind(item)

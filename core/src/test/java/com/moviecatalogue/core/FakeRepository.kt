@@ -5,7 +5,7 @@ import androidx.lifecycle.asFlow
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import androidx.room.withTransaction
-import com.moviecatalogue.core.data.IAppRepository
+import com.moviecatalogue.core.domain.usecase.repository.IAppRepository
 import com.moviecatalogue.core.data.Resource
 import com.moviecatalogue.core.data.local.LocalDataSource
 import com.moviecatalogue.core.data.networkBoundResource

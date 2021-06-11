@@ -9,6 +9,7 @@ import com.moviecatalogue.core.data.local.LocalDataSource
 import com.moviecatalogue.core.data.remote.RemoteDataSource
 import com.moviecatalogue.core.data.remote.network.ApiResponse
 import com.moviecatalogue.core.domain.usecase.model.*
+import com.moviecatalogue.core.domain.usecase.repository.IAppRepository
 import com.moviecatalogue.core.utils.*
 import com.moviecatalogue.core.utils.Constants.POST_PER_PAGE
 import kotlinx.coroutines.Dispatchers

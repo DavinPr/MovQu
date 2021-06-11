@@ -47,6 +47,16 @@
         <item name="android:textSize">20sp</item>
     </style>
 
+    <style name="BottomNavigationActiveText">
+        <item name="android:fontFamily">@font/poppins_semibold</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="BottomNavigationInactiveText">
+        <item name="android:fontFamily">@font/poppins</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
     // Will implemented soon
 <!--    <style name="Theme.MovieCatalogue.TextInputLayout.Filled" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">-->
 <!--        <item name="boxCornerRadiusBottomStart">8dp</item>-->

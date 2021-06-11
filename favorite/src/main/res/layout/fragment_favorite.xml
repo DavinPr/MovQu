@@ -7,7 +7,7 @@
     android:paddingStart="16dp"
     android:paddingEnd="16dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".presentation.ui.home.fragment.favorite.FavoriteFragment">
+    tools:context=".FavoriteFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_category"
