@@ -23,14 +23,10 @@ android {
         debug {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField "String", "API_KEY", API_KEY
-            buildConfigField "String", "BASE_URL", BASE_URL
         }
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField "String", "API_KEY", API_KEY
-            buildConfigField "String", "BASE_URL", BASE_URL
         }
     }
     buildFeatures {
@@ -43,6 +39,11 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+    externalNativeBuild {
+        ndkBuild {
+            path file('src/main/jni/Android.mk')
+        }
     }
 }
 

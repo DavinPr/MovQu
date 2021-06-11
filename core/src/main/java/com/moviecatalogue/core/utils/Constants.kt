@@ -18,4 +18,11 @@ object Constants {
     const val TV_DISCOVER_TYPE = 301
     const val TV_AIRING_TODAY_TYPE = 302
     const val TV_ON_THE_AIR_TYPE = 303
+
+    init {
+        System.loadLibrary("api-keys")
+    }
+    external fun getApiKeys() : String
+    external fun getBaseUrl() : String
+    external fun getHostName() : String
 }

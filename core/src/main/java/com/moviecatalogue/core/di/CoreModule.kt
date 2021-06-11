@@ -1,14 +1,14 @@
 package com.moviecatalogue.core.di
 
 import androidx.room.Room
-import com.moviecatalogue.core.BuildConfig
 import com.moviecatalogue.core.data.AppRepository
-import com.moviecatalogue.core.domain.usecase.repository.IAppRepository
 import com.moviecatalogue.core.data.local.LocalDataSource
 import com.moviecatalogue.core.data.local.room.FilmDatabase
 import com.moviecatalogue.core.data.remote.RemoteDataSource
 import com.moviecatalogue.core.data.remote.network.ApiService
+import com.moviecatalogue.core.domain.usecase.repository.IAppRepository
 import com.moviecatalogue.core.utils.AppExecutors
+import com.moviecatalogue.core.utils.Constants
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import net.sqlcipher.database.SQLiteDatabase
@@ -24,7 +24,7 @@ import java.util.concurrent.TimeUnit
 
 val networkModule = module {
     single {
-        val hostname = "api.themoviedb.org"
+        val hostname = Constants.getHostName()
         val certificatePinner = CertificatePinner.Builder()
             .add(hostname, "sha256/+vqZVAzTqUP8BGkfl88yU7SQ3C8J2uNEa55B7RZjEg0=")
             .add(hostname, "sha256/JSMzqOOrtyOT1kmau6zKhgT676hGgczD5VMdRMyJZFA=")
@@ -39,7 +39,7 @@ val networkModule = module {
 
     single {
         val retrofit = Retrofit.Builder()
-            .baseUrl(BuildConfig.BASE_URL)
+            .baseUrl(Constants.getBaseUrl())
             .addConverterFactory(GsonConverterFactory.create())
             .client(get())
             .build()
